@@ -5,9 +5,15 @@ https://discuss.huggingface.co/t/trainer-api-for-data-parallel-on-multi-node/138
 https://github.com/huggingface/blog/blob/main/zh/pytorch-ddp-accelerate-transformers.md
 https://llamafactory.readthedocs.io/zh-cn/latest/advanced/distributed.html
 
- https://huggingface.co/docs/transformers/trainer
- https://huggingface.co/docs/transformers/accelerate
- https://huggingface.co/docs/accelerate/en/usage_guides/deepspeed#multi-node-deepspeed
+https://huggingface.co/docs/transformers/trainer
+https://huggingface.co/docs/transformers/accelerate
+https://huggingface.co/docs/accelerate/en/usage_guides/deepspeed#multi-node-deepspeed
+
+https://www.bilibili.com/video/BV1uK421a7HG/?vd_source=20c0bb159a3a7a03b4d60bac7724fb15
+https://github.com/lansinuote/Simple_Accelerate
+
+
+
  
 5. use large model+LoRA and distributed training framework, and bigger dataset.
 6. evaluation performance improvement.
