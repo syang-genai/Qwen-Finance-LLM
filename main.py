@@ -45,7 +45,7 @@ def preprocess_format(example, tokenizer):
 
 
 def main():
-    dataset=load_from_disk("/root/llm_finetune/dataset/Josephgflowers/Finance-Instruct-500k-Formated")
+    dataset=load_from_disk("/root/Qwen-Finance-LLM/dataset/Josephgflowers/Finance-Instruct-500k-Formated")
     dataset=dataset.train_test_split(0.2)
     train_dataset=dataset["train"]
     eval_dataset=dataset["test"]
@@ -63,20 +63,20 @@ def main():
     
     # train config and train
     args = TrainingArguments(
-        output_dir="/root/llm_finetune/Qwen-OutputDir",
-        per_device_train_batch_size=2,
-        per_device_eval_batch_size=2,
-        gradient_accumulation_steps=2,
-        max_steps=3,
+        output_dir="/root/Qwen-Finance-LLM/Qwen-OutputDir",
+        per_device_train_batch_size=4,
+        per_device_eval_batch_size=4,
+        max_steps=9,
         eval_strategy="steps",
-        eval_steps=1,
-        logging_steps=1,
+        eval_steps=10,
+        logging_steps=10,
         save_steps=3,
         learning_rate=1e-4,
         save_on_each_node=True,
         gradient_checkpointing=True,
     )
     
+
     trainer = Trainer(
         model=model,
         args=args,
@@ -85,7 +85,12 @@ def main():
         data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True),
     )
     
-    trainer.train()
+    trainer.train(resume_from_checkpoint = False)
+     
+
+if __name__ == "__main__":
+    main()
+
      
     
 
