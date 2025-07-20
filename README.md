@@ -27,6 +27,9 @@ Set distributed_training parameters – In your training arguments, set ddp_find
 Check environment variables – Each node should have correct settings for MASTER_ADDR, MASTER_PORT, WORLD_SIZE, and RANK.
 Ensure all nodes communicate – Make sure SSH is set up, and all nodes can see each other. You might need to set up NCCL backend settings properly
 
+TRL+vLLM(speedup training--calculate speed up):
+https://huggingface.co/docs/trl/en/deepspeed_integration
+
 5. use large model+LoRA and distributed training framework, and bigger dataset.
 6. evaluation performance improvement.
 7. MOE
