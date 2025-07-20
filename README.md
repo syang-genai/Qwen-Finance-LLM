@@ -28,6 +28,7 @@ Check environment variables – Each node should have correct settings for MASTE
 Ensure all nodes communicate – Make sure SSH is set up, and all nodes can see each other. You might need to set up NCCL backend settings properly
 
 TRL+vLLM(speedup training--calculate speed up):
+https://huggingface.co/docs/trl/v0.19.1/en/sft_trainer#format-your-input-prompts
 https://huggingface.co/docs/trl/en/deepspeed_integration
 
 5. use large model+LoRA and distributed training framework, and bigger dataset.
