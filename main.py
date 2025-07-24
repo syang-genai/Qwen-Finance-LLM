@@ -53,7 +53,7 @@ def main():
     # load model and tokenizer
     model_name = "Qwen/Qwen3-0.6B"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_name, attn_implementation="flash_attention_2", device_map="auto")
     
     
     # datacollector
