@@ -64,16 +64,46 @@ def main():
     # train config and train
     args = TrainingArguments(
         output_dir="/root/Qwen-Finance-LLM/Qwen-OutputDir",
-        per_device_train_batch_size=4,
-        per_device_eval_batch_size=4,
-        max_steps=9,
-        eval_strategy="steps",
-        eval_steps=10,
+        overwrite_output_dir=True,
+        # per_device_train_batch_size=4,
+        # per_device_eval_batch_size=4,
+        gradient_accumulation_steps=4,
+        torch_empty_cache_steps=4,
+        eval_strategy="no",
+        learning_rate=1e-5, #check qwen learning rate
+        weight_decay=0,
+        adam_beta1=0.9,
+        adam_beta2=0.999,
+        adam_epsilon=1e-8,
+        max_grad_norm=1,
+        max_steps=10,
+        lr_scheduler_type="linear",
+        lr_scheduler_kwargs=dict(),
+        warmup_ratio=0.1,
         logging_steps=10,
+        log_level="debug",
+        log_on_each_node=False,
+        logging_strategy="steps",
+        logging_steps=3,
+        save_strategy="steps",
         save_steps=3,
-        learning_rate=1e-4,
-        save_on_each_node=True,
-        gradient_checkpointing=True,
+        save_total_limit=2,
+        load_best_model_at_end="True",
+        save_only_model="False",
+        restore_callback_states_from_checkpoint="True",
+        data_seed=42,
+        fp16=True, #fix precision training
+        dataloader_num_workers=0,
+        deepspeed= # deepspeed config
+        group_by_length=True,
+        report_to="wandb",
+        gradient_checkpointing=True, # gradient_checkpointing_kwargs: what are the parameters for save checkpoint?
+        auto_find_batch_size=True, # install accelerate
+        torch_compile=False, # paramter to be tested
+        include_tokens_per_second=True,
+        include_num_input_tokens_seen=True,
+        use_liger_kernel=True,
+        liger_kernel_config=dict() # check the dict for this
     )
     
 
