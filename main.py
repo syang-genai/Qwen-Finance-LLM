@@ -60,9 +60,28 @@ def main():
     collate_fn=DataCollatorForSeq2Seq(tokenizer, padding=True, return_tensors="pt")
     # trainloader=DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
     # testloader=DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
+
+
+    # deepspeed config
+    deepspeed_config={
+    "zero_optimization": {
+        "stage": 2,
+        "offload_optimizer": {
+            "device": "cpu",
+            "pin_memory": true
+        },
+        "allgather_partitions": true,
+        "allgather_bucket_size": 5e8,
+        "overlap_comm": true,
+        "reduce_scatter": true,
+        "reduce_bucket_size": 5e8,
+        "contiguous_gradients": true
+        "round_robin_gradients": true
+        }
+    }
     
     # train config and train
-    args = TrainingArguments(
+    train_args = TrainingArguments(
         output_dir="/root/Qwen-Finance-LLM/Qwen-OutputDir",
         overwrite_output_dir=True,
         # per_device_train_batch_size=4,
@@ -94,7 +113,7 @@ def main():
         data_seed=42,
         fp16=True, #fix precision training
         dataloader_num_workers=0,
-        deepspeed= # deepspeed config
+        deepspeed=deepspeed_config, # deepspeed config
         group_by_length=True,
         report_to="wandb",
         gradient_checkpointing=True, # gradient_checkpointing_kwargs: what are the parameters for save checkpoint?
@@ -109,7 +128,7 @@ def main():
 
     trainer = Trainer(
         model=model,
-        args=args,
+        args=train_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
         data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True),
