@@ -120,12 +120,9 @@ def main():
         auto_find_batch_size=True, # install accelerate
         torch_compile=False, # paramter to be tested
         include_tokens_per_second=True,
-        include_num_input_tokens_seen=True,
-        use_liger_kernel=True,
-        liger_kernel_config=dict() # check the dict for this
+        include_num_input_tokens_seen=True
     )
     
-
     trainer = Trainer(
         model=model,
         args=train_args,
