@@ -1,3 +1,5 @@
+import wandb
+
 import torch
 from torch.utils.data import DataLoader
 
@@ -6,7 +8,6 @@ from transformers import AutoTokenizer
 from transformers import AutoModelForCausalLM
 from transformers import DataCollatorForSeq2Seq
 from transformers import Trainer, TrainingArguments
-
 
 def preprocess_format(example, tokenizer):
     """
@@ -135,4 +136,5 @@ def main():
      
 
 if __name__ == "__main__":
+    wandb.login()
     main()
