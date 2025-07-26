@@ -1,0 +1,69 @@
+  0%|                                                                                                                                                  | 0/4 [00:00<?, ?it/s]`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+Traceback (most recent call last):
+  File "/root/Qwen-Finance-LLM/main.py", line 119, in <module>
+    main()
+  File "/root/Qwen-Finance-LLM/main.py", line 115, in main
+    trainer.train(resume_from_checkpoint = False)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 2206, in train
+    return inner_training_loop(
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 2548, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 3749, in training_step
+    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 3836, in compute_loss
+    outputs = model(**inputs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+    ret_val = func(*args, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2105, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1857, in _call_impl
+    return inner()
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1805, in inner
+    result = forward_call(*args, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 590, in forward
+    loss = self.loss_function(logits=logits, labels=labels, vocab_size=self.config.vocab_size, **kwargs)
+  File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/loss/loss_utils.py", line 55, in ForCausalLMLoss
+    logits = logits.float()
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.77 GiB. GPU 0 has a total capacity of 23.67 GiB of which 3.72 GiB is free. Including non-PyTorch memory, this process has 19.69 GiB memory in use. Process 95675 has 236.00 MiB memory in use. Of the allocated memory 18.91 GiB is allocated by PyTorch, and 420.42 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/root/Qwen-Finance-LLM/main.py", line 119, in <module>
+[rank0]:     main()
+[rank0]:   File "/root/Qwen-Finance-LLM/main.py", line 115, in main
+[rank0]:     trainer.train(resume_from_checkpoint = False)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 2206, in train
+[rank0]:     return inner_training_loop(
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 2548, in _inner_training_loop
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 3749, in training_step
+[rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/trainer.py", line 3836, in compute_loss
+[rank0]:     outputs = model(**inputs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+[rank0]:     ret_val = func(*args, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2105, in forward
+[rank0]:     loss = self.module(*inputs, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1857, in _call_impl
+[rank0]:     return inner()
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1805, in inner
+[rank0]:     result = forward_call(*args, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/utils/generic.py", line 943, in wrapper
+[rank0]:     output = func(self, *args, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 590, in forward
+[rank0]:     loss = self.loss_function(logits=logits, labels=labels, vocab_size=self.config.vocab_size, **kwargs)
+[rank0]:   File "/root/Qwen-Finance-LLM/.venv/lib/python3.10/site-packages/transformers/loss/loss_utils.py", line 55, in ForCausalLMLoss
+[rank0]:     logits = logits.float()
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.77 GiB. GPU 0 has a total capacity of 23.67 GiB of which 3.72 GiB is free. Including non-PyTorch memory, this process has 19.69 GiB memory in use. Process 95675 has 236.00 MiB memory in use. Of the allocated memory 18.91 GiB is allocated by PyTorch, and 420.42 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

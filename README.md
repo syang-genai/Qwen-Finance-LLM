@@ -31,6 +31,19 @@ TRL+vLLM(speedup training--calculate speed up):
 https://huggingface.co/docs/trl/v0.19.1/en/sft_trainer#format-your-input-prompts
 https://huggingface.co/docs/trl/en/deepspeed_integration
 
+---
+# Launch Single Node Multi-GPU Training
+1. **deepspeed** 
+  export TORCH_CUDA_ARCH_LIST="8.9" 
+  deepspeed --num_gpus=2 examples/pytorch/translation/run_translation.py 
+2. **torchrun**
+  torchrun --standalone --nnodes=1 --nproc-per-node=2 main.py 
+3. **accelerate config** 
+  accelerate configuration--saved at /root/.cache/huggingface/accelerate/default_config.yaml    
+  accelerate launch --num_processes=2 main.py  
+
+---
+
 5. use large model+LoRA and distributed training framework, and bigger dataset.
 6. evaluation performance improvement.
 7. MOE
