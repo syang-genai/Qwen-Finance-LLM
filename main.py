@@ -55,7 +55,7 @@ def main():
     # load model and tokenizer
     model_name = "Qwen/Qwen3-0.6B"
     tokenizer = AutoTokenizer.from_pretrained(model_name, device_map="auto")
-    model = AutoModelForCausalLM.from_pretrained(model_name, attn_implementation="flash_attention_2", torch_dtype=torch.float16, device_map="cuda")
+    model = AutoModelForCausalLM.from_pretrained(model_name, attn_implementation="flash_attention_2", device_map="cuda")
     
     # datacollector
     collate_fn=DataCollatorForSeq2Seq(tokenizer, padding=True, return_tensors="pt")
@@ -72,16 +72,16 @@ def main():
         gradient_accumulation_steps=4,
         torch_empty_cache_steps=4,
         eval_strategy="no",
-        learning_rate=1e-5, #check qwen learning rate
-        weight_decay=0,
+        learning_rate=1e-8, #check qwen learning rate
+        weight_decay=0.1,
         adam_beta1=0.9,
-        adam_beta2=0.999,
-        adam_epsilon=1e-8,
+        adam_beta2=0.95,
+        adam_epsilon=7e-8,
         max_grad_norm=1,
         max_steps=4,
-        lr_scheduler_type="linear",
+        lr_scheduler_type="linear", # cosine learning rate
         lr_scheduler_kwargs=dict(),
-        warmup_ratio=0.1,
+        warmup_ratio=0.25,
         log_level="debug",
         log_on_each_node=False,
         logging_strategy="steps",
