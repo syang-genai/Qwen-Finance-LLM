@@ -79,8 +79,7 @@ def main():
         adam_epsilon=7e-8,
         max_grad_norm=1,
         max_steps=4,
-        lr_scheduler_type="linear", # cosine learning rate
-        lr_scheduler_kwargs=dict(),
+        lr_scheduler_type="cosine",
         warmup_ratio=0.25,
         log_level="debug",
         log_on_each_node=False,
