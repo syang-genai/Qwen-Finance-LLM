@@ -10,7 +10,9 @@ wheels/
 .venv
 
 # Datasets
-dataset
+./Qwen-SFT/dataset
+./Qwen-GRPO/dataset
 
 # WandB
-wandb
+./Qwen-SFT/wandb
+./Qwen-GRPO/dataset
