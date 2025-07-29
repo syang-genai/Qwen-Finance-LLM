@@ -15,4 +15,4 @@ wheels/
 
 # WandB
 ./Qwen-SFT/wandb
-./Qwen-GRPO/dataset
+./Qwen-GRPO/wandb
