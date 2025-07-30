@@ -7,7 +7,6 @@ import wandb
 def main():
     dataset=load_from_disk("/root/Qwen-Finance-LLM/Qwen-GRPO/preprocess/Financial_Decisions_Reasoning_Dataset")
     
-
     def reward_len(completions, **kwargs):
         return [-abs(20 - len(completion[0]["content"])) for completion in completions]
     
@@ -16,8 +15,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name)
     
-    
-    # train config and train
+
     training_args = GRPOConfig(
         # data preprocessing
         remove_unused_columns=False,
@@ -74,8 +72,6 @@ def main():
         log_on_each_node=False
     )
 
-    # training_args = GRPOConfig(max_completion_length=512, output_dir="Qwen2-0.5B-GRPO")
-    
     trainer = GRPOTrainer(
         model=model,
         processing_class=tokenizer,
