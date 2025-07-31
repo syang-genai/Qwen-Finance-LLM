@@ -7,10 +7,13 @@ import wandb
 def main():
     dataset=load_from_disk("/root/Qwen-Finance-LLM/Qwen-GRPO/preprocess/Financial_Decisions_Reasoning_Dataset")
     
-    def reward_len(prompts, completions, **kwargs):
+    """ format following and decision results and model reward"""
+    def reward_len(prompts, completions, decision, **kwargs):
         """
             generation batch size=8
+            dataset contains columns ground trueth
         """
+        print("decision", decision)
         print("prompts", len(prompts), prompts[0])
         print("completions", len(completions), completions[0])
 

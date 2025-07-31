@@ -38,6 +38,10 @@
         }
       },
       "_type": "List"
+    },
+    "decision": {
+      "dtype": "string",
+      "_type": "Value"
     }
   },
   "homepage": "",

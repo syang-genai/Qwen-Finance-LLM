@@ -1,0 +1,8 @@
+{"time":"2025-07-31T06:11:35.001609444Z","level":"INFO","msg":"stream: starting","core version":"0.21.0"}
+{"time":"2025-07-31T06:11:35.270521752Z","level":"INFO","msg":"stream: created new stream","id":"89awnx3i"}
+{"time":"2025-07-31T06:11:35.270565504Z","level":"INFO","msg":"stream: started","id":"89awnx3i"}
+{"time":"2025-07-31T06:11:35.270598972Z","level":"INFO","msg":"writer: Do: started","stream_id":"89awnx3i"}
+{"time":"2025-07-31T06:11:35.270650809Z","level":"INFO","msg":"sender: started","stream_id":"89awnx3i"}
+{"time":"2025-07-31T06:11:35.270665516Z","level":"INFO","msg":"handler: started","stream_id":"89awnx3i"}
+{"time":"2025-07-31T06:15:53.881516291Z","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/syang-team/Qwen-GRPO/89awnx3i/file_stream\": write tcp 194.68.244.3:45712->35.186.228.49:443: write: broken pipe"}
+{"time":"2025-07-31T06:16:35.673131495Z","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/syang-team/Qwen-GRPO/89awnx3i/file_stream\": write tcp 194.68.244.3:55280->35.186.228.49:443: write: broken pipe"}
