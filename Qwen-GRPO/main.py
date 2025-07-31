@@ -3,23 +3,30 @@ from datasets import load_dataset,load_from_disk
 from trl import GRPOConfig, GRPOTrainer
 import wandb
 
+from format_check import validate_startup_investment_response
+
 
 def main():
-    dataset=load_from_disk("/root/Qwen-Finance-LLM/Qwen-GRPO/preprocess/Financial_Decisions_Reasoning_Dataset")
+    dataset=load_from_disk("./preprocess/Financial_Decisions_Reasoning_Dataset")
     
-    """ format following and decision results and model reward"""
-    def reward_len(prompts, completions, decision, **kwargs):
-        """
-            generation batch size=8
-            dataset contains columns ground trueth
-        """
-        print("decision", decision)
-        print("prompts", len(prompts), prompts[0])
-        print("completions", len(completions), completions[0])
-
-        print("kwargs", kwargs.keys())
-
-        return [-abs(20 - len(completion[0]["content"])) for completion in completions]
+    def decision_format_reward(prompts, completions, decision, **kwargs):
+        freward=list()
+        dreward=list()
+        for idx, completion in enumerate(completions):
+            response=validate_startup_investment_response(completion[0]["content"])
+            if response['is_valid']==True:
+                freward.append(1)
+                if response["parsed_data"]["decision"]==decision[idx]:
+                    dreward.append(1)
+                else:
+                    dreward.append(0)
+            else:
+                freward.append(0)
+                dreward.append(0)
+        
+        reward=[i+j for i,j in zip(freward,dreward)]
+        print("reward",reward)
+        return reward
     
     
     model_name="Qwen/Qwen3-0.6B"
@@ -67,7 +74,7 @@ def main():
         max_completion_length=1024,
         generation_batch_size=8,
         # save 
-        output_dir="/root/Qwen-Finance-LLM/Qwen-GRPO/Qwen-OutputDir",
+        output_dir="./Qwen-OutputDir",
         overwrite_output_dir=True,
         save_strategy="steps",
         save_steps=2,
@@ -87,7 +94,7 @@ def main():
     trainer = GRPOTrainer(
         model=model,
         processing_class=tokenizer,
-        reward_funcs=reward_len,
+        reward_funcs=decision_format_reward,
         args=training_args,
         train_dataset=dataset,
     )

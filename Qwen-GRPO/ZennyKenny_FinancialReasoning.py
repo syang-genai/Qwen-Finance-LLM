@@ -1,20 +1,18 @@
 from datasets import load_dataset
 
+
 def preprocess_format(example):
-    """
-        example=["system":..., "user":..., "assistant":...]
-    """
     system_prompt=f"""
-            You are evaluating whether to invest in the following startup. The user will give the startup idea. 
-            Your task includes: 
-            1. FIRST, REASON internally inside a <think>...</think> block. DO NOT include any decision or explanation here.
-            2. AFTER the </think> block, WRITE:
-            DECISION: [Invest] or [Do not invest]
-            EXPLANATION: A very short 1–2 sentence explanation why you decided to invest or not.
-            IMPORTANT: 
-            - Keep DECISION and EXPLANATION outside the <think> block.
-            - Follow the exact format shown.
-            """
+                    You are evaluating whether to invest in the following startup. The user will give the startup idea. 
+                    Your task includes: 
+                    1. FIRST, REASON internally inside a <think>...</think> block. DO NOT include any decision or explanation here.
+                    2. AFTER the </think> block, WRITE:
+                    DECISION: [Invest] or [Do not invest]
+                    EXPLANATION: A very short 1–2 sentence explanation why you decided to invest or not.
+                    IMPORTANT: 
+                    - Keep DECISION and EXPLANATION outside the <think> block.
+                    - Follow the exact format shown.
+                """
     
     example["prompt"]=[{"role":"system","content":system_prompt}, {"role":"user","content": example["idea"]}]
     
