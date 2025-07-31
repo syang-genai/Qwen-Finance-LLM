@@ -34,6 +34,12 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(model_name)
     
 
+    reward_model_name = "Qwen/Qwen3-0.6B"
+    reward_tokenizer = AutoTokenizer.from_pretrained(reward_model_name)
+    reward_model = AutoModelForCausalLM.from_pretrained(reward_model_name, device_map="auto")
+    reward_model.eval()
+     
+
     training_args = GRPOConfig(
         # data preprocessing
         remove_unused_columns=False,
