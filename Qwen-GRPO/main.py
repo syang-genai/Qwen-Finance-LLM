@@ -7,11 +7,13 @@ import wandb
 def main():
     dataset=load_from_disk("/root/Qwen-Finance-LLM/Qwen-GRPO/preprocess/Financial_Decisions_Reasoning_Dataset")
     
-    def reward_len(prompts, completions, completions_ids, **kwargs):
-        
-        print("prompts", len(prompts), prompts)
-        print("completions", len(completions), completions)
-        print("completions_ids", len(completions_ids), completions_ids)
+    def reward_len(prompts, completions, **kwargs):
+        """
+            generation batch size=8
+        """
+        print("prompts", len(prompts), prompts[0])
+        print("completions", len(completions), completions[0])
+
         print("kwargs", kwargs.keys())
 
         return [-abs(20 - len(completion[0]["content"])) for completion in completions]
@@ -40,11 +42,11 @@ def main():
         adam_beta2=0.95,
         adam_epsilon=1e-8,
         max_grad_norm=1,
-        max_steps=4,
+        max_steps=1,
         lr_scheduler_type="cosine",
         warmup_ratio=0.25,
         beta=1, # kl divergence
-        num_iterations=1, # iterations
+        num_iterations=4, 
         epsilon=0.2,
         importance_sampling_level="sequence",
         reward_weights=[1],
