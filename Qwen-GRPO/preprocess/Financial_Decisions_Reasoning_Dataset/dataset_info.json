@@ -42,6 +42,15 @@
     "decision": {
       "dtype": "string",
       "_type": "Value"
+    },
+    "expect_completion": {
+      "feature": {
+        "content": {
+          "dtype": "string",
+          "_type": "Value"
+        }
+      },
+      "_type": "List"
     }
   },
   "homepage": "",

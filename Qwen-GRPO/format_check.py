@@ -21,7 +21,7 @@ def validate_startup_investment_response(response: str) -> dict:
         "decision": None,
         "explanation": None
     }
-
+    
     # 1. Check for the presence and content of the <think>...</think> block
     # re.DOTALL allows '.' to match newlines
     think_block_match = re.search(r"<think>(.*?)</think>", response, re.DOTALL)
@@ -43,10 +43,10 @@ def validate_startup_investment_response(response: str) -> dict:
 
         # 2. Check for DECISION: line
         # Use re.IGNORECASE for robustness, though prompt implies exact casing
-        decision_line_match = re.search(r"DECISION:\s*\[(Invest|Do not invest)\]", post_think_segment, re.IGNORECASE)
+        decision_line_match = re.search(r"DECISION:\s*(Invest|Do not invest)", post_think_segment, re.IGNORECASE)
 
         if not decision_line_match:
-            errors.append("Missing or malformed 'DECISION: [Invest]' or 'DECISION: [Do not invest]' line after <think> block.")
+            errors.append("Missing or malformed 'DECISION: Invest' or 'DECISION: Do not invest' line after <think> block.")
             is_valid = False
         else:
             parsed_data["decision"] = decision_line_match.group(1).strip()

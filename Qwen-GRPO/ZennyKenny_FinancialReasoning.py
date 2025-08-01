@@ -3,7 +3,7 @@ from datasets import load_dataset
 
 def preprocess_format(example):
     system_prompt=f"""
-                    You are evaluating whether to invest in the following startup. The user will give the startup idea. 
+                    You are evaluating whether to invest in the following startup, and provide a final single decision with explaination. The user will give the startup idea. 
                     Your task includes: 
                     1. FIRST, REASON internally inside a <think>...</think> block. DO NOT include any decision or explanation here.
                     2. AFTER the </think> block, WRITE:
@@ -27,6 +27,7 @@ def preprocess_format(example):
     """ 
     example["completion"]=[{"role":"assistant","content": assistant}]
     example["decision"]=example["manager_partner_decision"]
+    example["expect_completion"]=[{"content":assistant}]
     return example
 
 
