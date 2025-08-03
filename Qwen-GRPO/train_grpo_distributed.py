@@ -44,7 +44,7 @@ def setup_distributed():
 def cleanup_distributed():
     if dist.is_initialized():
         dist.destroy_process_group()
-    if dist.rpc.is_initialized():
+    if dist.is_initialized():
         dist.rpc.shutdown()
 
 
@@ -80,7 +80,7 @@ def _calculate_llm_rewards_on_rm_host(prompts, completions, expect_completion, d
         """
         messages.append([{"role": "user", "content": evaluation_prompt}])
 
-    encoded_inputs = global_reward_model_tokenizer.apply_chat_template(messages, return_tensors="pt", add_generation_prompt=True, enable_thinking=False, padding=True)
+    encoded_inputs = global_reward_model_tokenizer.apply_chat_template(messages, return_tensors="pt", add_generation_prompt=True, enable_thinking=False, padding=True).to(f"cuda:{REWARD_MODEL_GLOBAL_GPU_ID}")
     
     with torch.no_grad():
         outputs = global_reward_model.generate(
@@ -125,7 +125,7 @@ def grpo_reward_function(prompts, completions, expect_completion, decision, **kw
         print(f"[Rank {current_rank}] Received {len(rewards_list)} rewards from {rm_worker_name}")
 
 
-    return torch.tensor(rewards_list, device=f"cuda:{dist.get_local_rank()}")
+    return torch.tensor(rewards_list, device=f"cuda:{dist.get_rank()}")
 
 
 def decision_format_reward(prompts, completions, decision, **kwargs):
@@ -149,19 +149,23 @@ def decision_format_reward(prompts, completions, decision, **kwargs):
 
 
 def main():
-    # setup_distributed()
-    
-    # current_rank = dist.get_rank()
-    # if current_rank == REWARD_MODEL_GLOBAL_GPU_ID:
-    #     _load_reward_model_on_device(REWARD_MODEL_NAME, REWARD_MODEL_GLOBAL_GPU_ID)
-    # else:
-    #     print(f"[Rank {current_rank}] This process is not hosting the reward model.")
+    setup_distributed()
+    current_rank = dist.get_rank()
+    if current_rank == REWARD_MODEL_GLOBAL_GPU_ID:
+        _load_reward_model_on_device(REWARD_MODEL_NAME, REWARD_MODEL_GLOBAL_GPU_ID)
+    else:
+        print(f"[Rank {current_rank}] This process is not hosting the reward model.")
 
+    
     dataset=load_from_disk("./preprocess/Financial_Decisions_Reasoning_Dataset")
     
     policy_tokenizer = AutoTokenizer.from_pretrained(POLICY_MODEL_NAME)
     policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME)        
-    
+    # policy_model, _, _, _ = deepspeed.initialize(
+    #         config="./deepspeed_config.json",
+    #         model=policy_model
+    #     )
+
     training_args = GRPOConfig(
         # data preprocessing
         remove_unused_columns=False,
@@ -170,8 +174,8 @@ def main():
         dataloader_num_workers=0,
         group_by_length=True,
         fp16=True, 
-        per_device_train_batch_size=2,
-        per_device_eval_batch_size=2,
+        per_device_train_batch_size=8,
+        per_device_eval_batch_size=8,
         # gradient_accumulation_steps=2,
         # gradient_checkpointing=True,
         learning_rate=1e-7, 
@@ -187,8 +191,8 @@ def main():
         num_iterations=4, 
         epsilon=0.2,
         importance_sampling_level="sequence",
-        reward_weights=[1],
-        # reward_weights=[1,3],
+        # reward_weights=[1],
+        reward_weights=[1,3],
         loss_type="dr_grpo",
         mask_truncated_completions=True, 
         deepspeed="./deepspeed_config.json",
@@ -201,7 +205,7 @@ def main():
         eval_strategy="no",
         # generation keywords
         max_completion_length=1024,
-        generation_batch_size=8,
+        generation_batch_size=16,
         # save 
         output_dir="./Qwen-OutputDir",
         overwrite_output_dir=True,
@@ -224,16 +228,16 @@ def main():
     trainer = GRPOTrainer(
         model=policy_model,
         processing_class=policy_tokenizer,
-        # reward_funcs=[decision_format_reward, grpo_reward_function],
-        reward_funcs=[decision_format_reward],
+        reward_funcs=[decision_format_reward, grpo_reward_function],
+        # reward_funcs=[decision_format_reward],
         args=training_args,
         train_dataset=dataset,
     )
 
-    # print(f"[Rank {current_rank}] Starting GRPO training...")
+    print(f"[Rank {current_rank}] Starting GRPO training...")
     trainer.train()
-    # print(f"[Rank {current_rank}] GRPO training finished.")
-    # cleanup_distributed()
+    print(f"[Rank {current_rank}] GRPO training finished.")
+    cleanup_distributed()
 
 
 if __name__ == "__main__":
