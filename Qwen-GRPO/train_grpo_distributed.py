@@ -3,7 +3,6 @@ import re
 from functools import partial
 import random
 import wandb
-import deepspeed
 
 import torch
 import torch.distributed as dist
@@ -16,7 +15,7 @@ from format_check import validate_startup_investment_response
 
 REWARD_MODEL_NAME = "Qwen/Qwen3-0.6B"
 POLICY_MODEL_NAME = "Qwen/Qwen3-0.6B"
-REWARD_MODEL_GLOBAL_GPU_ID = 0 
+REWARD_MODEL_GLOBAL_GPU_ID = 1
 
 
 def setup_distributed():
@@ -27,7 +26,7 @@ def setup_distributed():
     master_port = os.environ.get("MASTER_PORT", "29500")
 
     dist.init_process_group(
-        backend="nccl",
+        backend='nccl',
         rank=rank,
         world_size=world_size,
         init_method=f"env://"
@@ -161,11 +160,8 @@ def main():
     
     policy_tokenizer = AutoTokenizer.from_pretrained(POLICY_MODEL_NAME)
     policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME)        
-    # policy_model, _, _, _ = deepspeed.initialize(
-    #         config="./deepspeed_config.json",
-    #         model=policy_model
-    #     )
-
+    
+    
     training_args = GRPOConfig(
         # data preprocessing
         remove_unused_columns=False,
@@ -173,25 +169,23 @@ def main():
         restore_callback_states_from_checkpoint=True,
         dataloader_num_workers=0,
         group_by_length=True,
-        fp16=True, 
-        per_device_train_batch_size=8,
-        per_device_eval_batch_size=8,
-        # gradient_accumulation_steps=2,
-        # gradient_checkpointing=True,
-        learning_rate=1e-7, 
-        weight_decay=0.1,
-        adam_beta1=0.9,
-        adam_beta2=0.95,
-        adam_epsilon=1e-8,
-        max_grad_norm=1,
-        max_steps=1,
+        fp16=True, # deepspeed 
+        per_device_train_batch_size=8, # deepspeed
+        per_device_eval_batch_size=8, # deepspeed
+        gradient_accumulation_steps=2, 
+        learning_rate=1e-7, # deepseed
+        weight_decay=0.1, # deepseed
+        adam_beta1=0.9, # deepseed
+        adam_beta2=0.95, # deepseed
+        adam_epsilon=1e-8, # deepseed
+        max_grad_norm=1, # deepseed
+        max_steps=3,
         lr_scheduler_type="cosine",
         warmup_ratio=0.25,
         beta=1, # kl divergence
         num_iterations=4, 
         epsilon=0.2,
         importance_sampling_level="sequence",
-        # reward_weights=[1],
         reward_weights=[1,3],
         loss_type="dr_grpo",
         mask_truncated_completions=True, 
@@ -200,7 +194,7 @@ def main():
         sync_ref_model=True,
         ref_model_mixup_alpha=0.6,
         disable_dropout=True,
-        torch_compile=False , # True without deepseek 
+        torch_compile=False, # True without deepseek 
         # evaluate
         eval_strategy="no",
         # generation keywords
@@ -229,7 +223,6 @@ def main():
         model=policy_model,
         processing_class=policy_tokenizer,
         reward_funcs=[decision_format_reward, grpo_reward_function],
-        # reward_funcs=[decision_format_reward],
         args=training_args,
         train_dataset=dataset,
     )
