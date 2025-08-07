@@ -55,10 +55,8 @@ def main():
     dataset = dataset.map(preprocess_format,fn_kwargs=dict(tokenizer=tokenizer), remove_columns=["system","user","assistant"])
     
     # save dataset
-    dataset.save_to_disk("/root/Qwen-Finance-LLM/dataset/Josephgflowers/Finance-Instruct-500k-Formated")
-    dataset=load_from_disk("/root/Qwen-Finance-LLM/dataset/Josephgflowers/Finance-Instruct-500k-Formated")
-    
-    print("first example \n", dataset[0])
+    dataset.save_to_disk(".dataset/Josephgflowers/Finance-Instruct-500k-Formated")
+    dataset=load_from_disk(".dataset/Josephgflowers/Finance-Instruct-500k-Formated")
     
 
 if __name__ == "__main__":

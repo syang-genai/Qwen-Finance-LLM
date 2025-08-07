@@ -1,3 +1,4 @@
+import os
 import torch
 from torch.utils.data import DataLoader
 
@@ -6,32 +7,27 @@ from transformers import AutoTokenizer
 from transformers import AutoModelForCausalLM
 from transformers import DataCollatorForSeq2Seq
 from transformers import Trainer, TrainingArguments
-import os
 
 os.environ['TORCH_CUDA_ARCH_LIST']="8.9"
 
-def preprocess_format(example, tokenizer):
-    """
-        example={"system":, "user":, "assistant":}
-    """
-    system_prompt= "You are a financial assistant. Answer the user's question accurately but keep it brief." if example["system"]=='\n' else example["system"] 
-    
+
+def reformat(example, tokenizer, enable_think):
     instruction=tokenizer.apply_chat_template(
-        [{"role": "system", "content": system_prompt}, {"role": "user", "content": example["user"]}],
+        example["prompt"],
         tokenize=False,
         add_generation_prompt=False,
-        enable_thinking=False
+        enable_thinking=enable_think
     )
     
     response=tokenizer.apply_chat_template(
-        [{"role": "assistant", "content": example["assistant"]}],
+        example["completion"],
         tokenize=False,
         add_generation_prompt=False,
         enable_thinking=False
     )
-
+    
     instruction_ids=tokenizer(instruction,  add_special_tokens=False)
-    response_ids=tokenizer(response,  add_special_tokens=False)
+    response_ids=tokenizer(response, add_special_tokens=False)
     
     # create input_ids, attention and labels
     input_ids=instruction_ids["input_ids"]+response_ids["input_ids"]
@@ -41,27 +37,28 @@ def preprocess_format(example, tokenizer):
     example["input_ids"]=input_ids
     example["attention_mask"]=attention_mask
     example["labels"]=labels
-
     return example
-    
 
 
 def main():
-    dataset=load_from_disk("/root/Qwen-Finance-LLM/dataset/Josephgflowers/Finance-Instruct-500k-Formated")
-    dataset=dataset.train_test_split(0.2)
-    train_dataset=dataset["train"]
-    eval_dataset=dataset["test"]
-    
     # load model and tokenizer
     model_name = "Qwen/Qwen3-0.6B"
     tokenizer = AutoTokenizer.from_pretrained(model_name, device_map="auto")
     model = AutoModelForCausalLM.from_pretrained(model_name, attn_implementation="flash_attention_2", device_map="cuda")
     
+    # load and preprocess dataset
+    dataset=load_from_disk("../dataset/Josephgflowers/Finance-Instruct-500k-Formated")
+    dataset = dataset.map(reformat, fn_kwargs=dict(tokenizer=tokenizer, enable_think=False), remove_columns=["prompt","completion"])
+    dataset=dataset.train_test_split(0.2)
+    train_dataset=dataset["train"]
+    eval_dataset=dataset["test"]
+    print(train_dataset[0])
+
     # datacollector
     collate_fn=DataCollatorForSeq2Seq(tokenizer, padding=True, return_tensors="pt")
     # trainloader=DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
     # testloader=DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
-    
+
     
     # train config and train
     train_args = TrainingArguments(
@@ -93,7 +90,7 @@ def main():
         data_seed=42,
         fp16=True, 
         dataloader_num_workers=0,
-        deepspeed="/root/Qwen-Finance-LLM/deepspeed_config.json", 
+        deepspeed="./deepspeed_config.json", 
         group_by_length=True,
         report_to="wandb",
         gradient_checkpointing=True,  
@@ -101,7 +98,7 @@ def main():
         include_tokens_per_second=True,
         include_num_input_tokens_seen=True
     )
-    
+
     
     trainer = Trainer(
         model=model,
@@ -116,3 +113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
