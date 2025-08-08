@@ -21,6 +21,7 @@ def main():
     fdr=FinancialDecisionsReasoning(count=180)
 
     dataset=concatenate_datasets([bs,op,hc,fr,sfr,fi,fdr])
+    dataset = dataset.shuffle(seed=42)
     dataset.save_to_disk("../mixed_dataset")
     
 
