@@ -1,0 +1,65 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "adversarial_qa_dbert_based_on",
+  "dataset_name": "p3",
+  "dataset_size": 19583411,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/bigscience/P3@db485208b9f41d46c1d0975202328d08f8199046/adversarial_qa_dbert_based_on/train-00000-of-00001.parquet": {
+      "num_bytes": 5642584,
+      "checksum": null
+    },
+    "hf://datasets/bigscience/P3@db485208b9f41d46c1d0975202328d08f8199046/adversarial_qa_dbert_based_on/validation-00000-of-00001.parquet": {
+      "num_bytes": 564160,
+      "checksum": null
+    }
+  },
+  "download_size": 6206744,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "labels": {
+      "feature": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "_type": "List"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 25790155,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 17840498,
+      "num_examples": 10000,
+      "dataset_name": "p3"
+    },
+    "validation": {
+      "name": "validation",
+      "num_bytes": 1742913,
+      "num_examples": 1000,
+      "dataset_name": "p3"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

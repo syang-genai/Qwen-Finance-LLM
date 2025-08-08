@@ -1,0 +1,55 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "finance-instruct-500k-reasoning",
+  "dataset_size": 715642,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/vamshirvk/Finance-Instruct-500k-reasoning@4776a4f9db6ffa5324de1081d2a6feaff295aa36/data/train-00000-of-00001.parquet": {
+      "num_bytes": 290715,
+      "checksum": null
+    }
+  },
+  "download_size": 290715,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "labels": {
+      "feature": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "_type": "List"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 1006357,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 715642,
+      "num_examples": 40,
+      "dataset_name": "finance-instruct-500k-reasoning"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

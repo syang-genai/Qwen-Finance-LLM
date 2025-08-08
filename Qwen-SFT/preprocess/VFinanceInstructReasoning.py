@@ -12,7 +12,7 @@ def dataset_reformat(example):
     return example
 
 
-def main():
+def SynFinanceInstructReason():
     model_name = "Qwen/Qwen3-0.6B"
     tokenizer = AutoTokenizer.from_pretrained(model_name, device_map="auto")
 
@@ -20,14 +20,13 @@ def main():
     dataset = dataset.shuffle(seed=42)
     
     dataset = dataset.map(dataset_reformat, remove_columns=["system","user","assistant","generation","distilabel_metadata","model_name"])
-    print(dataset[0])
-
     dataset = dataset.map(reformat, fn_kwargs=dict(tokenizer=tokenizer, enable_think=True), remove_columns=["prompt","completion"])
     
     # save dataset
     dataset.save_to_disk("../dataset/Vamshirvk/Finance-Instruct-500k-reasoning")
     dataset=load_from_disk("../dataset/Vamshirvk/Finance-Instruct-500k-reasoning")
-    print("first example \n", dataset[0])
+
+    return dataset
 
 if __name__ == "__main__":
-    main()
+    SynFinanceInstructReason()

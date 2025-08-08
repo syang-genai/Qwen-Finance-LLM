@@ -1,0 +1,65 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "hc3-instruct",
+  "dataset_size": 51075573,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/causal-lm/hc3-instruct@90f689546cfbbd1eed8f901daf5ebdedca86a972/data/train-00000-of-00001-94f93e882c831fec.parquet": {
+      "num_bytes": 25959850,
+      "checksum": null
+    },
+    "hf://datasets/causal-lm/hc3-instruct@90f689546cfbbd1eed8f901daf5ebdedca86a972/data/validation-00000-of-00001-a863a606d88353dc.parquet": {
+      "num_bytes": 2988138,
+      "checksum": null
+    }
+  },
+  "download_size": 28947988,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "labels": {
+      "feature": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "_type": "List"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 80023561,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 45821223,
+      "num_examples": 42170,
+      "dataset_name": "hc3-instruct"
+    },
+    "validation": {
+      "name": "validation",
+      "num_bytes": 5254350,
+      "num_examples": 4686,
+      "dataset_name": "hc3-instruct"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
