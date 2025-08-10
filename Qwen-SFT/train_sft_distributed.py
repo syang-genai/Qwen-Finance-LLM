@@ -11,35 +11,6 @@ from transformers import Trainer, TrainingArguments
 os.environ['TORCH_CUDA_ARCH_LIST']="8.9"
 
 
-def reformat(example, tokenizer, enable_think):
-    instruction=tokenizer.apply_chat_template(
-        example["prompt"],
-        tokenize=False,
-        add_generation_prompt=False,
-        enable_thinking=enable_think
-    )
-    
-    response=tokenizer.apply_chat_template(
-        example["completion"],
-        tokenize=False,
-        add_generation_prompt=False,
-        enable_thinking=False
-    )
-    
-    instruction_ids=tokenizer(instruction,  add_special_tokens=False)
-    response_ids=tokenizer(response, add_special_tokens=False)
-    
-    # create input_ids, attention and labels
-    input_ids=instruction_ids["input_ids"]+response_ids["input_ids"]
-    attention_mask=instruction_ids['attention_mask']+response_ids['attention_mask']
-    labels=[-100]*len(instruction_ids["input_ids"])+response_ids["input_ids"]
-    
-    example["input_ids"]=input_ids
-    example["attention_mask"]=attention_mask
-    example["labels"]=labels
-    return example
-
-
 def main():
     # load model and tokenizer
     model_name = "Qwen/Qwen3-0.6B"
@@ -47,18 +18,13 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(model_name, attn_implementation="flash_attention_2", device_map="cuda")
     
     # load and preprocess dataset
-    dataset=load_from_disk("../dataset/Josephgflowers/Finance-Instruct-500k-Formated")
-    dataset = dataset.map(reformat, fn_kwargs=dict(tokenizer=tokenizer, enable_think=False), remove_columns=["prompt","completion"])
+    dataset=load_from_disk("./mixed_dataset")
     dataset=dataset.train_test_split(0.2)
     train_dataset=dataset["train"]
     eval_dataset=dataset["test"]
-    print(train_dataset[0])
-
+    
     # datacollector
     collate_fn=DataCollatorForSeq2Seq(tokenizer, padding=True, return_tensors="pt")
-    # trainloader=DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
-    # testloader=DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
-
     
     # train config and train
     train_args = TrainingArguments(
@@ -89,7 +55,7 @@ def main():
         restore_callback_states_from_checkpoint="True",
         data_seed=42,
         fp16=True, 
-        dataloader_num_workers=0,
+        dataloader_num_workers=4,
         deepspeed="./deepspeed_config.json", 
         group_by_length=True,
         report_to="wandb",
