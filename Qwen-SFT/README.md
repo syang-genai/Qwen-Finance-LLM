@@ -37,7 +37,8 @@ https://huggingface.co/docs/trl/en/deepspeed_integration
   export TORCH_CUDA_ARCH_LIST="8.9"  
   nohup deepspeed --num_gpus=2 examples/pytorch/translation/run_translation.py  
 2. **torchrun**  
-  nohup torchrun --standalone --nnodes=1 --nproc-per-node=2 main.py  
+  nohup torchrun --standalone --nnodes=1 --nproc-per-node=2 main.py 
+  torchrun --standalone --nnodes=1 --nproc-per-node=1 train_sft_distributed.py --config_file sft_config.json  
 3. **accelerate config**  
   accelerate configuration--saved at /root/.cache/huggingface/accelerate/default_config.yaml     
   nohup accelerate launch --num_processes=2 main.py   
