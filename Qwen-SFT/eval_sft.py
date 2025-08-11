@@ -19,7 +19,7 @@ task_cfg = TaskConfig(
     dataset_args={
         'data_collection': {
             'dataset_id': 'modelscope/EvalScope-Qwen3-Test',
-        }，
+        },
         'finance_qa': {
             "local_path": "custom_eval/text/qa",
             "subset_list": [
@@ -29,7 +29,7 @@ task_cfg = TaskConfig(
         }
     },
     eval_batch_size=128,
-    limit:32
+    limit=32
 )
 
 run_task(task_cfg=task_cfg)
