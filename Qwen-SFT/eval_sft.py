@@ -2,17 +2,6 @@ from evalscope import TaskConfig, run_task
 
 task_cfg = TaskConfig(
     model='Qwen3-32B',
-    api_url='http://127.0.0.1:8801/v1/chat/completions',
-    eval_type='service',
-    datasets=[
-        'data_collection',
-    ],
-    dataset_args={
-        'data_collection': {
-            'dataset_id': 'modelscope/EvalScope-Qwen3-Test',
-        }
-    },
-    eval_batch_size=128,
     generation_config={
         'max_tokens': 20000, 
         'temperature': 0.7, 
@@ -21,9 +10,26 @@ task_cfg = TaskConfig(
         'n': 1,
         'chat_template_kwargs': {'enable_thinking': False}
     },
-    timeout=60000,
-    stream=True,
-    limit=1000,
+    
+    datasets=[
+        'data_collection', 
+        'finance_qa'
+    ],
+    
+    dataset_args={
+        'data_collection': {
+            'dataset_id': 'modelscope/EvalScope-Qwen3-Test',
+        }，
+        'finance_qa': {
+            "local_path": "custom_eval/text/qa",
+            "subset_list": [
+                # 评测数据集名称，上述 *.jsonl 中的 *，可配置多个子数据集
+                "example"       
+            ]
+        }
+    },
+    eval_batch_size=128,
+    limit:32
 )
 
 run_task(task_cfg=task_cfg)
