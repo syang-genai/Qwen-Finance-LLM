@@ -8,6 +8,7 @@ dependencies = [
     "datasets>=4.0.0",
     "huggingface-hub>=0.34.4",
     "jinja2>=3.1.6",
-    "transformers>=4.55.0",
+    "nltk>=3.9.1",
+    "transformers>=4.51.0",
     "vllm",
 ]

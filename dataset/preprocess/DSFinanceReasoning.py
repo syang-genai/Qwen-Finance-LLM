@@ -6,27 +6,36 @@ from transformers import AutoTokenizer
 from transformers import AutoModelForCausalLM
 
 
-def dataset_reformat(example):
+def train_dataset_reformat(example):
     example["prompt"]=[{"role": "user", "content": example["prompt"]}]
     example["completion"]=[{"role": "assistant", "content": example["completion"]}]
     return example
+
+
+def eval_dataset_reformat(example):
+    example["message"]=[{"role": "user", "content": example["prompt"]}]
+    example["response"]=example["completion"]
+    return example
     
 
-def FinanceReasoning(count):
-    model_name = "Qwen/Qwen3-0.6B"
+def FinanceReasoning(train_count, eval_count, sublist, model_name, train_save_path, eval_save_path):
     tokenizer = AutoTokenizer.from_pretrained(model_name, device_map="auto")
 
-    dataset = load_dataset("Diweanshu/Finance-Reasoning",split="train")
+    dataset = load_dataset("Diweanshu/Finance-Reasoning",split=sublist)
     dataset = dataset.shuffle(seed=42)
-    dataset = dataset.select(range(count))
-    
-    dataset = dataset.map(dataset_reformat, remove_columns=["system_prompt"])
-    dataset = dataset.map(reformat, fn_kwargs=dict(tokenizer=tokenizer, enable_think=False), remove_columns=["prompt","completion"])
 
-    # save dataset
-    dataset.save_to_disk("../dataset/Diweanshu/Finance-Reasoning")
-    return dataset
+
+    train_dataset = dataset.select(range(train_count))
+    train_dataset = train_dataset.map(train_dataset_reformat, remove_columns=["system_prompt"])
+    train_dataset = train_dataset.map(reformat, fn_kwargs=dict(tokenizer=tokenizer, enable_think=False), remove_columns=["prompt","completion"])
+    train_dataset.save_to_disk(train_save_path)
+
     
+    eval_dataset = dataset.select(range(train_count,train_count+eval_count))
+    eval_dataset = eval_dataset.map(eval_dataset_reformat, remove_columns=["system_prompt"])
+    eval_dataset.to_json(eval_save_path)
+    return dataset
+
 
 if __name__ == "__main__":
-    FinanceReasoning(400)
+    FinanceReasoning(train_count=400, eval_count=500, sublist="train", model_name="Qwen/Qwen3-0.6B", train_save_path, eval_save_path)
