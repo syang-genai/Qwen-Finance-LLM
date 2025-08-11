@@ -24,7 +24,7 @@ task_cfg = TaskConfig(
     
     dataset_args={
         'data_collection': {
-            "local_path": "eval_dataset/qwen3_eval.jsonl",
+            "local_path": "benchmark_dataset/qwen3_eval.jsonl",
         },
 
         'general_qa': {
