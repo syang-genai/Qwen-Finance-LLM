@@ -25,9 +25,10 @@ def BigScience(train_count, eval_count, sublist, model_name, train_save_path="..
     
     train_dataset = dataset.select(range(train_count))
     train_dataset = train_dataset.map(train_dataset_reformat, remove_columns=["inputs","inputs_pretokenized","targets","targets_pretokenized"])
+    print(train_dataset[0])
     train_dataset = train_dataset.map(reformat, fn_kwargs=dict(tokenizer=tokenizer, enable_think=False), remove_columns=["prompt","completion"])
     train_dataset.save_to_disk(train_save_path)
-    
+
     eval_dataset = dataset.select(range(train_count,train_count+eval_count))
     eval_dataset = eval_dataset.map(eval_dataset_reformat, remove_columns=["inputs","inputs_pretokenized","targets","targets_pretokenized"])
     
@@ -36,5 +37,5 @@ def BigScience(train_count, eval_count, sublist, model_name, train_save_path="..
 
 
 if __name__ == "__main__":
-    BigScience(2500, 500, "adversarial_qa_dbert_based_on", "Qwen/Qwen3-0.6B", train_save_path="../train_dataset/BigScienceP3/QA", eval_save_path="../eval_dataset/BSP3_QA.jsonl")
+    BigScience(2500, 500, "adversarial_qa_dbert_based_on", "Qwen/Qwen3-0.6B", train_save_path="../train_dataset/BigScienceP3/QA", eval_save_path="../eval_dataset/BigScienceP3/BSP3_QA.jsonl")
     # BigScience(2500, 500, "ag_news_classify_with_choices_question_first", "Qwen/Qwen3-0.6B", train_save_path="../train_dataset/BigScienceP3/Classify", eval_save_path="../eval_dataset/BigScienceP3/Classify/BSP3_Classify.json")

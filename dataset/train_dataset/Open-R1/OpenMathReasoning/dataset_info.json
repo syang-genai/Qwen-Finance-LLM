@@ -1,0 +1,103 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "open_r1-math-220k",
+  "dataset_size": 4964555324,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00000-of-00010.parquet": {
+      "num_bytes": 213636225,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00001-of-00010.parquet": {
+      "num_bytes": 214580713,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00002-of-00010.parquet": {
+      "num_bytes": 214585972,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00003-of-00010.parquet": {
+      "num_bytes": 216773329,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00004-of-00010.parquet": {
+      "num_bytes": 214835490,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00005-of-00010.parquet": {
+      "num_bytes": 214488314,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00006-of-00010.parquet": {
+      "num_bytes": 215593265,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00007-of-00010.parquet": {
+      "num_bytes": 216310260,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00008-of-00010.parquet": {
+      "num_bytes": 213801211,
+      "checksum": null
+    },
+    "hf://datasets/open-r1/OpenR1-Math-220k@e4e141ec9dea9f8326f4d347be56105859b2bd68/data/train-00009-of-00010.parquet": {
+      "num_bytes": 215293135,
+      "checksum": null
+    }
+  },
+  "download_size": 2149897914,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "labels": {
+      "feature": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 7114453238,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 4964555324,
+      "num_examples": 93733,
+      "shard_lengths": [
+        10374,
+        10374,
+        10374,
+        10373,
+        10373,
+        10373,
+        9373,
+        10373,
+        10373,
+        1373
+      ],
+      "dataset_name": "open_r1-math-220k"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

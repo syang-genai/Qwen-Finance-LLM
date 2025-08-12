@@ -1,0 +1,116 @@
+{
+    "name": "data_collection",
+    "dataset_name": "qwen3_eval",
+    "dataset_pretty_name": "",
+    "dataset_description": "",
+    "model_name": "qwen_model",
+    "score": 0.2969,
+    "metrics": [
+        {
+            "name": "Average",
+            "num": 128,
+            "score": 0.2969,
+            "macro_score": 0.152,
+            "categories": [
+                {
+                    "name": [
+                        "Qwen3",
+                        "English"
+                    ],
+                    "num": 125,
+                    "score": 0.304,
+                    "macro_score": 0.3019,
+                    "subsets": [
+                        {
+                            "name": "mmlu_pro/biology",
+                            "score": 0.75,
+                            "num": 4
+                        },
+                        {
+                            "name": "mmlu_pro/business",
+                            "score": 0.1111,
+                            "num": 9
+                        },
+                        {
+                            "name": "mmlu_pro/chemistry",
+                            "score": 0.5,
+                            "num": 12
+                        },
+                        {
+                            "name": "mmlu_pro/computer science",
+                            "score": 0.0,
+                            "num": 3
+                        },
+                        {
+                            "name": "mmlu_pro/economics",
+                            "score": 0.1818,
+                            "num": 11
+                        },
+                        {
+                            "name": "mmlu_pro/engineering",
+                            "score": 0.25,
+                            "num": 8
+                        },
+                        {
+                            "name": "mmlu_pro/health",
+                            "score": 0.2857,
+                            "num": 7
+                        },
+                        {
+                            "name": "mmlu_pro/history",
+                            "score": 0.5,
+                            "num": 2
+                        },
+                        {
+                            "name": "mmlu_pro/law",
+                            "score": 0.2857,
+                            "num": 14
+                        },
+                        {
+                            "name": "mmlu_pro/math",
+                            "score": 0.4286,
+                            "num": 21
+                        },
+                        {
+                            "name": "mmlu_pro/other",
+                            "score": 0.1111,
+                            "num": 9
+                        },
+                        {
+                            "name": "mmlu_pro/philosophy",
+                            "score": 0.25,
+                            "num": 4
+                        },
+                        {
+                            "name": "mmlu_pro/physics",
+                            "score": 0.2727,
+                            "num": 11
+                        },
+                        {
+                            "name": "mmlu_pro/psychology",
+                            "score": 0.3,
+                            "num": 10
+                        }
+                    ]
+                },
+                {
+                    "name": [
+                        "Qwen3",
+                        "Math&Science"
+                    ],
+                    "num": 3,
+                    "score": 0.0,
+                    "macro_score": 0.0,
+                    "subsets": [
+                        {
+                            "name": "gpqa/gpqa_diamond",
+                            "score": 0.0,
+                            "num": 3
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "analysis": "N/A"
+}

@@ -1,0 +1,59 @@
+{
+  "builder_name": "json",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "finance-instruct-500k",
+  "dataset_size": 557110560,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/Josephgflowers/Finance-Instruct-500k@379407b4708ededdf48cd33d1e1cffda45cc56f4/train.json": {
+      "num_bytes": 580080511,
+      "checksum": null
+    }
+  },
+  "download_size": 580080511,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "labels": {
+      "feature": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 1137191071,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 557110560,
+      "num_examples": 518185,
+      "shard_lengths": [
+        454234,
+        63951
+      ],
+      "dataset_name": "finance-instruct-500k"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

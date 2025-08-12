@@ -1,0 +1,568 @@
+2025-08-12 05:47:25,976 - evalscope - INFO - Loading model qwen_model ...
+2025-08-12 05:47:28,540 - evalscope - INFO - Loading dataset from benchmark_dataset/qwen3_eval.jsonl
+2025-08-12 05:47:28,791 - evalscope - WARNING - Failed to get generation config of qwen_model from model hub, use default.
+2025-08-12 05:47:28,792 - evalscope - WARNING - Got local model dir: qwen_model
+2025-08-12 05:47:28,792 - evalscope - INFO - Updating generation config ...
+2025-08-12 05:47:29,113 - evalscope - WARNING - Failed to get generation config of qwen_model from model hub, use default.
+2025-08-12 05:47:29,113 - evalscope - WARNING - Got local model dir: qwen_model
+2025-08-12 05:47:29,113 - evalscope - INFO - Updating generation config ...
+2025-08-12 05:47:29,159 - evalscope - WARNING - Failed to get generation config of qwen_model from model hub, use default.
+2025-08-12 05:47:29,160 - evalscope - WARNING - Got local model dir: qwen_model
+2025-08-12 05:47:29,160 - evalscope - INFO - Updating generation config ...
+2025-08-12 05:47:29,206 - evalscope - INFO - Dump task config to ./outputs/20250812_054725/configs/task_config_94a355.yaml
+2025-08-12 05:47:29,209 - evalscope - INFO - {
+    "model": "qwen_model",
+    "model_id": "qwen_model",
+    "model_args": {
+        "revision": "master",
+        "precision": "torch.float16"
+    },
+    "model_task": "text_generation",
+    "template_type": null,
+    "chat_template": null,
+    "datasets": [
+        "data_collection",
+        "general_qa"
+    ],
+    "dataset_args": {
+        "data_collection": {},
+        "general_qa": {
+            "name": "general_qa",
+            "dataset_id": "../dataset/eval_dataset",
+            "model_adapter": "generation",
+            "output_types": [
+                "generation"
+            ],
+            "subset_list": [
+                "BigScienceP3/BSP3_QA",
+                "Diweanshu/Finance-Reasoning/FR",
+                "H3Instruct/H3I",
+                "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                "Open-R1/OpenMathReasoning/OMR",
+                "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR"
+            ],
+            "metric_list": [
+                "AverageBLEU",
+                "AverageRouge"
+            ],
+            "few_shot_num": 0,
+            "few_shot_random": false,
+            "train_split": null,
+            "eval_split": "test",
+            "prompt_template": "请回答问题\n{query}",
+            "system_prompt": null,
+            "query_template": null,
+            "pretty_name": "General-QA",
+            "description": "A general question answering dataset for custom evaluation. For detailed instructions on how to use this benchmark, please refer to the [User Guide](https://evalscope.readthedocs.io/zh-cn/latest/advanced_guides/custom_dataset/llm.html#qa).",
+            "tags": [
+                "QA",
+                "Custom"
+            ],
+            "filters": null,
+            "extra_params": {}
+        }
+    },
+    "dataset_dir": "/root/.cache/modelscope/hub/datasets",
+    "dataset_hub": "modelscope",
+    "generation_config": {
+        "max_tokens": 20000,
+        "n": 1,
+        "chat_template_kwargs": {
+            "enable_thinking": false
+        }
+    },
+    "eval_type": "checkpoint",
+    "eval_backend": "Native",
+    "eval_config": null,
+    "stage": "all",
+    "limit": 128,
+    "eval_batch_size": 32,
+    "mem_cache": false,
+    "use_cache": null,
+    "work_dir": "./outputs/20250812_054725",
+    "outputs": null,
+    "ignore_errors": false,
+    "debug": false,
+    "dry_run": false,
+    "seed": 42,
+    "api_url": null,
+    "api_key": "EMPTY",
+    "timeout": null,
+    "stream": false,
+    "judge_strategy": "auto",
+    "judge_worker_num": 1,
+    "judge_model_args": {},
+    "analysis_report": false
+}
+2025-08-12 05:55:03,402 - evalscope - INFO - subset_level Report:
++-----------+-----------------+--------------+------------------+---------------+-------+
+| task_type |     metric      | dataset_name |   subset_name    | average_score | count |
++-----------+-----------------+--------------+------------------+---------------+-------+
+|   exam    | AverageAccuracy |   mmlu_pro   |       math       |    0.4286     |  21   |
+|   exam    | AverageAccuracy |   mmlu_pro   |       law        |    0.2857     |  14   |
+|   exam    | AverageAccuracy |   mmlu_pro   |    chemistry     |      0.5      |  12   |
+|   exam    | AverageAccuracy |   mmlu_pro   |    economics     |    0.1818     |  11   |
+|   exam    | AverageAccuracy |   mmlu_pro   |     physics      |    0.2727     |  11   |
+|   exam    | AverageAccuracy |   mmlu_pro   |    psychology    |      0.3      |  10   |
+|   exam    | AverageAccuracy |   mmlu_pro   |     business     |    0.1111     |   9   |
+|   exam    | AverageAccuracy |   mmlu_pro   |      other       |    0.1111     |   9   |
+|   exam    | AverageAccuracy |   mmlu_pro   |   engineering    |     0.25      |   8   |
+|   exam    | AverageAccuracy |   mmlu_pro   |      health      |    0.2857     |   7   |
+|   exam    | AverageAccuracy |   mmlu_pro   |     biology      |     0.75      |   4   |
+|   exam    | AverageAccuracy |   mmlu_pro   |    philosophy    |     0.25      |   4   |
+|   exam    | AverageAccuracy |   mmlu_pro   | computer science |      0.0      |   3   |
+| knowledge |  AveragePass@1  |     gpqa     |   gpqa_diamond   |      0.0      |   3   |
+|   exam    | AverageAccuracy |   mmlu_pro   |     history      |      0.5      |   2   |
++-----------+-----------------+--------------+------------------+---------------+-------+
+2025-08-12 05:55:03,402 - evalscope - INFO - dataset_level Report:
++-----------+-----------------+--------------+---------------+-------+
+| task_type |     metric      | dataset_name | average_score | count |
++-----------+-----------------+--------------+---------------+-------+
+|   exam    | AverageAccuracy |   mmlu_pro   |     0.304     |  125  |
+| knowledge |  AveragePass@1  |     gpqa     |      0.0      |   3   |
++-----------+-----------------+--------------+---------------+-------+
+2025-08-12 05:55:03,402 - evalscope - INFO - task_level Report:
++-----------+-----------------+---------------+-------+
+| task_type |     metric      | average_score | count |
++-----------+-----------------+---------------+-------+
+|   exam    | AverageAccuracy |     0.304     |  125  |
+| knowledge |  AveragePass@1  |      0.0      |   3   |
++-----------+-----------------+---------------+-------+
+2025-08-12 05:55:03,402 - evalscope - INFO - tag_level Report:
++------+-----------------+---------------+-------+
+| tags |     metric      | average_score | count |
++------+-----------------+---------------+-------+
+|  en  | AverageAccuracy |     0.304     |  125  |
+|  en  |  AveragePass@1  |      0.0      |   3   |
++------+-----------------+---------------+-------+
+2025-08-12 05:55:03,403 - evalscope - INFO - category_level Report:
++-----------+--------------+-----------------+---------------+-------+
+| category0 |  category1   |     metric      | average_score | count |
++-----------+--------------+-----------------+---------------+-------+
+|   Qwen3   |   English    | AverageAccuracy |     0.304     |  125  |
+|   Qwen3   | Math&Science |  AveragePass@1  |      0.0      |   3   |
++-----------+--------------+-----------------+---------------+-------+
+2025-08-12 05:55:03,406 - evalscope - INFO - Skipping report analysis (`analysis_report=False`).
+2025-08-12 05:55:03,406 - evalscope - INFO - Report saved to ./outputs/20250812_054725/reports/qwen_model/qwen3_eval.json
+2025-08-12 05:55:03,407 - evalscope - INFO - Start evaluating on dataset ../dataset/eval_dataset
+2025-08-12 05:55:03,814 - evalscope - INFO - Use settings: > few_shot_num: 0, > few_shot_split: None, > target_eval_split: test
+2025-08-12 05:55:06,598 - evalscope - INFO - Dump predictions to ./outputs/20250812_054725/predictions/qwen_model/general_qa_BigScienceP3/BSP3_QA.jsonl.
+2025-08-12 05:55:10,418 - evalscope - INFO - Dump predictions to ./outputs/20250812_054725/predictions/qwen_model/general_qa_Diweanshu/Finance-Reasoning/FR.jsonl.
+2025-08-12 05:55:14,351 - evalscope - INFO - Dump predictions to ./outputs/20250812_054725/predictions/qwen_model/general_qa_H3Instruct/H3I.jsonl.
+2025-08-12 05:55:14,945 - evalscope - WARNING - rouge score error: 我 无法回答 您 的 问题 ， 因为 您 没有 提供 具体 的 提问 内容 。 请 提供 更 多 关于 您 需要 帮助 的 问题 的 信息 。  not enough values to unpack (expected 2, got 0)
+2025-08-12 05:55:17,716 - evalscope - INFO - Dump predictions to ./outputs/20250812_054725/predictions/qwen_model/general_qa_Josephgflowers/Finance-Instruct-500k-Formated/FIF.jsonl.
+2025-08-12 05:55:20,781 - evalscope - INFO - Dump predictions to ./outputs/20250812_054725/predictions/qwen_model/general_qa_Open-R1/OpenMathReasoning/OMR.jsonl.
+2025-08-12 05:55:22,115 - evalscope - INFO - Dump predictions to ./outputs/20250812_054725/predictions/qwen_model/general_qa_ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR.jsonl.
+2025-08-12 05:55:22,168 - evalscope - INFO - 
+../dataset/eval_dataset report table:
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| Model      | Dataset    | Metric    | Subset                                                      |   Num |   Score | Cat.0   |
++============+============+===========+=============================================================+=======+=========+=========+
+| qwen_model | general_qa | Rouge-1-R | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-R | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-R | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-R | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0043 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-R | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0002 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-R | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-R | OVERALL                                                     |   631 |  0.0009 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-P | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-P | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-P | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-P | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0141 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-P | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0004 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-P | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-P | OVERALL                                                     |   631 |  0.0029 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-F | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-F | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-F | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-F | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0065 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-F | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0002 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-F | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-1-F | OVERALL                                                     |   631 |  0.0014 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-R | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-R | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-R | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-R | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0002 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-R | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-R | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-R | OVERALL                                                     |   631 |  0      | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-P | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-P | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-P | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-P | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0009 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-P | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-P | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-P | OVERALL                                                     |   631 |  0.0002 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-F | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-F | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-F | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-F | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0003 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-F | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-F | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-2-F | OVERALL                                                     |   631 |  0.0001 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-R | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-R | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-R | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-R | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0039 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-R | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-R | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-R | OVERALL                                                     |   631 |  0.0008 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-P | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-P | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-P | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-P | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.017  | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-P | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0003 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-P | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-P | OVERALL                                                     |   631 |  0.0035 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-F | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-F | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-F | H3Instruct/H3I                                              |   127 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-F | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0063 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-F | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-F | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | Rouge-L-F | OVERALL                                                     |   631 |  0.0013 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-1    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-1    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-1    | H3Instruct/H3I                                              |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-1    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0009 | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-1    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-1    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-1    | OVERALL                                                     |   632 |  0.0002 | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-2    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-2    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-2    | H3Instruct/H3I                                              |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-2    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-2    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-2    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-2    | OVERALL                                                     |   632 |  0      | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-3    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-3    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-3    | H3Instruct/H3I                                              |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-3    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-3    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-3    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-3    | OVERALL                                                     |   632 |  0      | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-4    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-4    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-4    | H3Instruct/H3I                                              |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-4    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-4    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-4    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+
+| qwen_model | general_qa | bleu-4    | OVERALL                                                     |   632 |  0      | -       |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+ 
+
+2025-08-12 05:55:22,169 - evalscope - INFO - Skipping report analysis (`analysis_report=False`).
+2025-08-12 05:55:22,170 - evalscope - INFO - Dump report to: ./outputs/20250812_054725/reports/qwen_model/general_qa.json 
+
+2025-08-12 05:55:22,170 - evalscope - INFO - Evaluation finished on ../dataset/eval_dataset
+2025-08-12 05:55:22,181 - evalscope - INFO - Overall report table: 
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| Model      | Dataset    | Metric    | Subset                                                      |   Num |   Score | Cat.0   | Cat.1        |
++============+============+===========+=============================================================+=======+=========+=========+==============+
+| qwen_model | general_qa | Rouge-1-R | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-R | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-R | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-R | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0043 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-R | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0002 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-R | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-R | OVERALL                                                     |   631 |  0.0009 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-P | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-P | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-P | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-P | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0141 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-P | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0004 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-P | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-P | OVERALL                                                     |   631 |  0.0029 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-F | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-F | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-F | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-F | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0065 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-F | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0002 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-F | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-1-F | OVERALL                                                     |   631 |  0.0014 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-R | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-R | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-R | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-R | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0002 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-R | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-R | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-R | OVERALL                                                     |   631 |  0      | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-P | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-P | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-P | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-P | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0009 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-P | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-P | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-P | OVERALL                                                     |   631 |  0.0002 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-F | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-F | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-F | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-F | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0003 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-F | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-F | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-2-F | OVERALL                                                     |   631 |  0.0001 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-R | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-R | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-R | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-R | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0039 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-R | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-R | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-R | OVERALL                                                     |   631 |  0.0008 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-P | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-P | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-P | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-P | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.017  | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-P | Open-R1/OpenMathReasoning/OMR                               |   128 |  0.0003 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-P | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-P | OVERALL                                                     |   631 |  0.0035 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-F | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-F | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-F | H3Instruct/H3I                                              |   127 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-F | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0063 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-F | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-F | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | Rouge-L-F | OVERALL                                                     |   631 |  0.0013 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-1    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-1    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-1    | H3Instruct/H3I                                              |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-1    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0.0009 | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-1    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-1    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-1    | OVERALL                                                     |   632 |  0.0002 | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-2    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-2    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-2    | H3Instruct/H3I                                              |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-2    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-2    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-2    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-2    | OVERALL                                                     |   632 |  0      | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-3    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-3    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-3    | H3Instruct/H3I                                              |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-3    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-3    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-3    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-3    | OVERALL                                                     |   632 |  0      | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-4    | BigScienceP3/BSP3_QA                                        |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-4    | Diweanshu/Finance-Reasoning/FR                              |   100 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-4    | H3Instruct/H3I                                              |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-4    | Josephgflowers/Finance-Instruct-500k-Formated/FIF           |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-4    | Open-R1/OpenMathReasoning/OMR                               |   128 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-4    | ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR |    20 |  0      | default | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | general_qa | bleu-4    | OVERALL                                                     |   632 |  0      | -       | nan          |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/biology                                            |     4 |  0.75   | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/business                                           |     9 |  0.1111 | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/chemistry                                          |    12 |  0.5    | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/computer science                                   |     3 |  0      | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/economics                                          |    11 |  0.1818 | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/engineering                                        |     8 |  0.25   | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/health                                             |     7 |  0.2857 | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/history                                            |     2 |  0.5    | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/law                                                |    14 |  0.2857 | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/math                                               |    21 |  0.4286 | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/other                                              |     9 |  0.1111 | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/philosophy                                         |     4 |  0.25   | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/physics                                            |    11 |  0.2727 | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | mmlu_pro/psychology                                         |    10 |  0.3    | Qwen3   | English      |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | gpqa/gpqa_diamond                                           |     3 |  0      | Qwen3   | Math&Science |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+
+| qwen_model | qwen3_eval | Average   | OVERALL                                                     |   128 |  0.2969 | -       |              |
++------------+------------+-----------+-------------------------------------------------------------+-------+---------+---------+--------------+ 
+
+2025-08-12 05:55:22,734 - evalscope - INFO - Finished evaluation for qwen_model on ['data_collection', 'general_qa']
+2025-08-12 05:55:22,735 - evalscope - INFO - Output directory: ./outputs/20250812_054725

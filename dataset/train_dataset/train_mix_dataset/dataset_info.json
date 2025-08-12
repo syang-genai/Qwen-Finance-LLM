@@ -7,21 +7,21 @@
         "dtype": "int32",
         "_type": "Value"
       },
-      "_type": "List"
+      "_type": "Sequence"
     },
     "attention_mask": {
       "feature": {
         "dtype": "int8",
         "_type": "Value"
       },
-      "_type": "List"
+      "_type": "Sequence"
     },
     "labels": {
       "feature": {
         "dtype": "int64",
         "_type": "Value"
       },
-      "_type": "List"
+      "_type": "Sequence"
     }
   },
   "homepage": "",

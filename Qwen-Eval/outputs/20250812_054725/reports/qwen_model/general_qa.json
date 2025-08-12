@@ -1,0 +1,635 @@
+{
+    "name": "qwen_model@general_qa",
+    "dataset_name": "general_qa",
+    "dataset_pretty_name": "General-QA",
+    "dataset_description": "A general question answering dataset for custom evaluation. For detailed instructions on how to use this benchmark, please refer to the [User Guide](https://evalscope.readthedocs.io/zh-cn/latest/advanced_guides/custom_dataset/llm.html#qa).",
+    "model_name": "qwen_model",
+    "score": 0.0009,
+    "metrics": [
+        {
+            "name": "Rouge-1-R",
+            "num": 631,
+            "score": 0.0009,
+            "macro_score": 0.0009,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0009,
+                    "macro_score": 0.0007,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0043,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0002,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-1-P",
+            "num": 631,
+            "score": 0.0029,
+            "macro_score": 0.0029,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0029,
+                    "macro_score": 0.0024,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0141,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0004,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-1-F",
+            "num": 631,
+            "score": 0.0014,
+            "macro_score": 0.0014,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0014,
+                    "macro_score": 0.0011,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0065,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0002,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-2-R",
+            "num": 631,
+            "score": 0.0,
+            "macro_score": 0.0,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0,
+                    "macro_score": 0.0,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0002,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-2-P",
+            "num": 631,
+            "score": 0.0002,
+            "macro_score": 0.0002,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0002,
+                    "macro_score": 0.0001,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0009,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-2-F",
+            "num": 631,
+            "score": 0.0001,
+            "macro_score": 0.0001,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0001,
+                    "macro_score": 0.0,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0003,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-L-R",
+            "num": 631,
+            "score": 0.0008,
+            "macro_score": 0.0008,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0008,
+                    "macro_score": 0.0006,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0039,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-L-P",
+            "num": 631,
+            "score": 0.0035,
+            "macro_score": 0.0035,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0035,
+                    "macro_score": 0.0029,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.017,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0003,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Rouge-L-F",
+            "num": 631,
+            "score": 0.0013,
+            "macro_score": 0.0013,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 631,
+                    "score": 0.0013,
+                    "macro_score": 0.001,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 127
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0063,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "bleu-1",
+            "num": 632,
+            "score": 0.0002,
+            "macro_score": 0.0002,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 632,
+                    "score": 0.0002,
+                    "macro_score": 0.0001,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0009,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "bleu-2",
+            "num": 632,
+            "score": 0.0,
+            "macro_score": 0.0,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 632,
+                    "score": 0.0,
+                    "macro_score": 0.0,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "bleu-3",
+            "num": 632,
+            "score": 0.0,
+            "macro_score": 0.0,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 632,
+                    "score": 0.0,
+                    "macro_score": 0.0,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "bleu-4",
+            "num": 632,
+            "score": 0.0,
+            "macro_score": 0.0,
+            "categories": [
+                {
+                    "name": [
+                        "default"
+                    ],
+                    "num": 632,
+                    "score": 0.0,
+                    "macro_score": 0.0,
+                    "subsets": [
+                        {
+                            "name": "BigScienceP3/BSP3_QA",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Diweanshu/Finance-Reasoning/FR",
+                            "score": 0.0,
+                            "num": 100
+                        },
+                        {
+                            "name": "H3Instruct/H3I",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Josephgflowers/Finance-Instruct-500k-Formated/FIF",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "Open-R1/OpenMathReasoning/OMR",
+                            "score": 0.0,
+                            "num": 128
+                        },
+                        {
+                            "name": "ZennyKenny/SyntheticFinancialDecisionsReasoningDataset/SFDR",
+                            "score": 0.0,
+                            "num": 20
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "analysis": "N/A"
+}

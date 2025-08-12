@@ -1,0 +1,55 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "finance-reasoning",
+  "dataset_size": 2225042,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/Diweanshu/Finance-Reasoning@62bd5a4e3b088cd95b157e80003d30c88c57608b/data/train-00000-of-00001.parquet": {
+      "num_bytes": 873395,
+      "checksum": null
+    }
+  },
+  "download_size": 873395,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "labels": {
+      "feature": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 3098437,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 2225042,
+      "num_examples": 500,
+      "dataset_name": "finance-reasoning"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
