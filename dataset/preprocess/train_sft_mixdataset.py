@@ -1,5 +1,3 @@
-from utils import reformat
-
 from BigScienceP3 import BigScience
 from DSFinanceReasoning import FinanceReasoning
 from JFFinanceInstruct import FinanceInstruct
@@ -79,7 +77,7 @@ def main():
     
     dataset=concatenate_datasets([bs,op,hc,fr,sfr,fi,fdr])
     dataset = dataset.shuffle(seed=42)
-    dataset.save_to_disk("../train_dataset/train_mix_dataset")
+    dataset.save_to_disk("../train_dataset/train_sft_mixdataset")
 
 
 if __name__ == "__main__":
