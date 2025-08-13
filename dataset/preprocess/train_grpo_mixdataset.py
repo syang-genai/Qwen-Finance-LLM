@@ -9,7 +9,6 @@ def main():
     
     dataset=concatenate_datasets([fq4d, nyrf])
     dataset = dataset.shuffle(seed=42)
-    print(dataset[:1])
     dataset.save_to_disk("../train_dataset/train_grpo_mixdataset")
 
 
