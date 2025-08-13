@@ -10,13 +10,12 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from datasets import load_dataset,load_from_disk
 from trl import GRPOConfig, GRPOTrainer
-from format_check import validate_startup_investment_response
+# from format_check import validate_startup_investment_response
 
 
 REWARD_MODEL_NAME = "Qwen/Qwen3-0.6B"
 POLICY_MODEL_NAME = "Qwen/Qwen3-0.6B"
 REWARD_MODEL_GLOBAL_GPU_ID = 1
-
 
 def setup_distributed():
     rank = int(os.environ["RANK"])
@@ -54,6 +53,7 @@ def _load_reward_model_on_device(model_name: str, device_id: int):
     global global_reward_model_tokenizer, global_reward_model, global_reward_model_device
     print(f"[Rank {dist.get_rank()}] Loading Reward Model on cuda:{device_id}...")
     global_reward_model_tokenizer = AutoTokenizer.from_pretrained(model_name)
+    global_reward_model_tokenizer.padding_side = "left" 
     global_reward_model = AutoModelForCausalLM.from_pretrained(model_name)
     global_reward_model.to(f"cuda:{device_id}")
     global_reward_model.eval()
@@ -63,17 +63,17 @@ def _load_reward_model_on_device(model_name: str, device_id: int):
 
 
 # --- Reward Calculation Function (RPC service) ---
-def _calculate_llm_rewards_on_rm_host(prompts, completions, expect_completion, decision, **kwargs) -> list[float]:
+def _calculate_llm_rewards_on_rm_host(prompts, completions, reference_answer, **kwargs) -> list[float]:
     if global_reward_model is None or global_reward_model_tokenizer is None:
         raise RuntimeError(f"Reward model not initialized on worker_{dist.get_rank()}.")
-
+    
     rewards=list()
     messages=list()
-    for first, second in zip(expect_completion,completions):
+    for ref_ans, ans in zip(reference_answer, completions):
         evaluation_prompt = f"""
             Please rate the similarity between the following two sentense.
-            First sentense: {first[0]["content"]}
-            Second sentense: {second[0]["content"]}
+            Reference answer sentense: {ref_ans[0]["content"]}
+            Generated answer sentense: {ans[0]["content"]}
             Answer the question with Rating (1-5).
             Rating:
         """
@@ -109,16 +109,16 @@ def _calculate_llm_rewards_on_rm_host(prompts, completions, expect_completion, d
     return rewards
 
 
-def grpo_reward_function(prompts, completions, expect_completion, decision, **kwargs) -> torch.Tensor:
+def grpo_reward_function(prompts, completions, reference_answer, **kwargs) -> torch.Tensor:
     current_rank = dist.get_rank()
     if current_rank == REWARD_MODEL_GLOBAL_GPU_ID:
-        rewards_list = _calculate_llm_rewards_on_rm_host(prompts, completions, expect_completion, decision, **kwargs)
+        rewards_list = _calculate_llm_rewards_on_rm_host(prompts, completions, reference_answer, **kwargs)
     else:
         rm_worker_name = f"worker_{REWARD_MODEL_GLOBAL_GPU_ID}"
         rewards_list = dist.rpc.rpc_sync(
             to=rm_worker_name,
             func= _calculate_llm_rewards_on_rm_host, 
-            args=(prompts, completions, expect_completion, decision),
+            args=(prompts, completions, reference_answer),
             kwargs=kwargs
         )
         print(f"[Rank {current_rank}] Received {len(rewards_list)} rewards from {rm_worker_name}")
@@ -127,24 +127,24 @@ def grpo_reward_function(prompts, completions, expect_completion, decision, **kw
     return torch.tensor(rewards_list, device=f"cuda:{dist.get_rank()}")
 
 
-def decision_format_reward(prompts, completions, decision, **kwargs):
-    freward=list()
-    dreward=list()
-    for idx, completion in enumerate(completions):
-        response=validate_startup_investment_response(completion[0]["content"])
+# def decision_format_reward(prompts, completions, decision, **kwargs):
+#     freward=list()
+#     dreward=list()
+#     for idx, completion in enumerate(completions):
+#         response=validate_startup_investment_response(completion[0]["content"])
         
-        if response['is_valid']==True:
-            freward.append(1)
-            if response["parsed_data"]["decision"]==decision[idx]:
-                dreward.append(1)
-            else:
-                dreward.append(0)
-        else:
-            freward.append(0)
-            dreward.append(0)
+#         if response['is_valid']==True:
+#             freward.append(1)
+#             if response["parsed_data"]["decision"]==decision[idx]:
+#                 dreward.append(1)
+#             else:
+#                 dreward.append(0)
+#         else:
+#             freward.append(0)
+#             dreward.append(0)
     
-    reward=[i+j for i,j in zip(freward,dreward)]
-    return reward
+#     reward=[i+j for i,j in zip(freward,dreward)]
+#     return reward
 
 
 def main():
@@ -156,9 +156,10 @@ def main():
         print(f"[Rank {current_rank}] This process is not hosting the reward model.")
 
     
-    dataset=load_from_disk("./preprocess/Financial_Decisions_Reasoning_Dataset")
+    dataset=load_from_disk("../dataset/train_dataset/train_grpo_mixdataset")
     
     policy_tokenizer = AutoTokenizer.from_pretrained(POLICY_MODEL_NAME)
+    policy_tokenizer.padding_side = "left"  # batch generation 
     policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME)        
     
     
@@ -170,8 +171,8 @@ def main():
         dataloader_num_workers=0,
         group_by_length=True,
         fp16=True, # deepspeed 
-        per_device_train_batch_size=8, # deepspeed
-        per_device_eval_batch_size=8, # deepspeed
+        per_device_train_batch_size=4, # deepspeed
+        per_device_eval_batch_size=4, # deepspeed
         gradient_accumulation_steps=2, 
         learning_rate=1e-7, # deepseed
         weight_decay=0.1, # deepseed
@@ -186,10 +187,12 @@ def main():
         num_iterations=4, 
         epsilon=0.2,
         importance_sampling_level="sequence",
-        reward_weights=[1,3],
+        reward_weights=[1],
         loss_type="dr_grpo",
         mask_truncated_completions=True, 
-        deepspeed="./deepspeed_config.json",
+        cache_implementation='dynamic',
+        # deepspeed="deepspeed_config.json",
+        # use_vllm=True, 
         # reference model  
         sync_ref_model=True,
         ref_model_mixup_alpha=0.6,
@@ -198,10 +201,10 @@ def main():
         # evaluate
         eval_strategy="no",
         # generation keywords
-        max_completion_length=1024,
-        generation_batch_size=16,
+        max_completion_length=20000,
+        generation_batch_size=8, # batch_size*step_accumulation
         # save 
-        output_dir="./Qwen-OutputDir",
+        output_dir="Qwen-OutputDir",
         overwrite_output_dir=True,
         save_strategy="steps",
         save_steps=2,
@@ -222,7 +225,7 @@ def main():
     trainer = GRPOTrainer(
         model=policy_model,
         processing_class=policy_tokenizer,
-        reward_funcs=[decision_format_reward, grpo_reward_function],
+        reward_funcs=[grpo_reward_function],
         args=training_args,
         train_dataset=dataset,
     )
@@ -234,6 +237,4 @@ def main():
 
 
 if __name__ == "__main__":
-    wandb.init(project="Qwen-GRPO")
     main()
-    wandb.finish()
