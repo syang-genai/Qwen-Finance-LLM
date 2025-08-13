@@ -3,6 +3,7 @@ from datasets import load_dataset
 def dataset_reformat(example):
     example["prompt"]=[{"role": "user", "content": example["question"]}]
     example["completion"]=[{"role": "assistant", "content": example["responses"][0]["response"]}]
+    example["reference_answer"]=[{"role": "assistant", "content": example["reference_answer"]}]
     return example
     
 
