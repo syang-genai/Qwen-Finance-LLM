@@ -155,13 +155,11 @@ def main():
     else:
         print(f"[Rank {current_rank}] This process is not hosting the reward model.")
 
-    
     dataset=load_from_disk("../dataset/train_dataset/train_grpo_mixdataset")
     
     policy_tokenizer = AutoTokenizer.from_pretrained(POLICY_MODEL_NAME)
     policy_tokenizer.padding_side = "left"  # batch generation 
     policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME)        
-    
     
     training_args = GRPOConfig(
         # data preprocessing
@@ -180,7 +178,7 @@ def main():
         adam_beta2=0.95, # deepseed
         adam_epsilon=1e-8, # deepseed
         max_grad_norm=1, # deepseed
-        max_steps=3,
+        max_steps=6,
         lr_scheduler_type="cosine",
         warmup_ratio=0.25,
         beta=1, # kl divergence
@@ -191,7 +189,7 @@ def main():
         loss_type="dr_grpo",
         mask_truncated_completions=True, 
         cache_implementation='dynamic',
-        # deepspeed="deepspeed_config.json",
+        deepspeed="deepspeed_config.json",
         # use_vllm=True, 
         # reference model  
         sync_ref_model=True,
@@ -221,7 +219,6 @@ def main():
         log_on_each_node=False
     )
     
-
     trainer = GRPOTrainer(
         model=policy_model,
         processing_class=policy_tokenizer,
@@ -229,12 +226,11 @@ def main():
         args=training_args,
         train_dataset=dataset,
     )
-
+    
     print(f"[Rank {current_rank}] Starting GRPO training...")
     trainer.train()
     print(f"[Rank {current_rank}] GRPO training finished.")
     cleanup_distributed()
-
 
 if __name__ == "__main__":
     main()
