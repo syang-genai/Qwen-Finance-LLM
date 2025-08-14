@@ -34,7 +34,7 @@ def main(config):
     # model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config, device_map="cuda")
     model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config, attn_implementation="flash_attention_2", torch_dtype=torch.bfloat16, device_map="cuda")
     model.config.use_cache = False
-    model = prepare_model_for_kbit_training(model)
+    model = prepare_model_for_kbit_training(model,use_gradient_checkpointing=False)
     
     # LoRA 
     loraconfig = LoraConfig(
@@ -66,7 +66,7 @@ def main(config):
         bf16=config["train_arg"]["train"]["bf16"],
         per_device_train_batch_size=config["train_arg"]["train"]["per_device_train_batch_size"],
         gradient_accumulation_steps=config["train_arg"]["train"]["gradient_accumulation_steps"],
-        gradient_checkpointing=True,  
+        gradient_checkpointing=False,  
         learning_rate=config["train_arg"]["train"]["learning_rate"], 
         weight_decay=0.1,
         adam_beta1=0.9,

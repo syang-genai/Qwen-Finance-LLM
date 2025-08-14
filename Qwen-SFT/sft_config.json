@@ -3,7 +3,7 @@
     "name": "Qwen/Qwen3-0.6B"
   },
   "dataset": {
-    "path": "../dataset/train_dataset/train_mix_dataset/"
+    "path": "../dataset/train_dataset/sft_mix_dataset/"
   },
   "train_arg": {
         "dataset":{

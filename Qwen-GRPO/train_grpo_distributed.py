@@ -6,16 +6,17 @@ import wandb
 
 import torch
 import torch.distributed as dist
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM,  BitsAndBytesConfig
 
 from datasets import load_dataset,load_from_disk
 from trl import GRPOConfig, GRPOTrainer
-# from format_check import validate_startup_investment_response
-
+from peft import prepare_model_for_kbit_training
+from peft import LoraConfig, get_peft_model
 
 REWARD_MODEL_NAME = "Qwen/Qwen3-0.6B"
 POLICY_MODEL_NAME = "Qwen/Qwen3-0.6B"
 REWARD_MODEL_GLOBAL_GPU_ID = 1
+
 
 def setup_distributed():
     rank = int(os.environ["RANK"])
@@ -23,7 +24,7 @@ def setup_distributed():
     local_rank = int(os.environ["LOCAL_RANK"])
     master_addr = os.environ.get("MASTER_ADDR", "localhost")
     master_port = os.environ.get("MASTER_PORT", "29500")
-
+    
     dist.init_process_group(
         backend='nccl',
         rank=rank,
@@ -52,7 +53,16 @@ global_reward_model_device = None
 def _load_reward_model_on_device(model_name: str, device_id: int):
     global global_reward_model_tokenizer, global_reward_model, global_reward_model_device
     print(f"[Rank {dist.get_rank()}] Loading Reward Model on cuda:{device_id}...")
-    global_reward_model_tokenizer = AutoTokenizer.from_pretrained(model_name)
+    
+    bnb_reward_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_quant_storage=torch.uint8
+    )
+    
+    global_reward_model_tokenizer = AutoTokenizer.from_pretrained(model_name, quantization_config=bnb_reward_config, device_map="auto")
     global_reward_model_tokenizer.padding_side = "left" 
     global_reward_model = AutoModelForCausalLM.from_pretrained(model_name)
     global_reward_model.to(f"cuda:{device_id}")
@@ -127,26 +137,6 @@ def grpo_reward_function(prompts, completions, reference_answer, **kwargs) -> to
     return torch.tensor(rewards_list, device=f"cuda:{dist.get_rank()}")
 
 
-# def decision_format_reward(prompts, completions, decision, **kwargs):
-#     freward=list()
-#     dreward=list()
-#     for idx, completion in enumerate(completions):
-#         response=validate_startup_investment_response(completion[0]["content"])
-        
-#         if response['is_valid']==True:
-#             freward.append(1)
-#             if response["parsed_data"]["decision"]==decision[idx]:
-#                 dreward.append(1)
-#             else:
-#                 dreward.append(0)
-#         else:
-#             freward.append(0)
-#             dreward.append(0)
-    
-#     reward=[i+j for i,j in zip(freward,dreward)]
-#     return reward
-
-
 def main():
     setup_distributed()
     current_rank = dist.get_rank()
@@ -154,12 +144,37 @@ def main():
         _load_reward_model_on_device(REWARD_MODEL_NAME, REWARD_MODEL_GLOBAL_GPU_ID)
     else:
         print(f"[Rank {current_rank}] This process is not hosting the reward model.")
-
-    dataset=load_from_disk("../dataset/train_dataset/train_grpo_mixdataset")
     
+    
+    
+    dataset=load_from_disk("../dataset/train_dataset/grpo_mix_dataset")
     policy_tokenizer = AutoTokenizer.from_pretrained(POLICY_MODEL_NAME)
     policy_tokenizer.padding_side = "left"  # batch generation 
-    policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME)        
+    # policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME) 
+
+    bnb_policy_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_quant_storage=torch.uint8
+    ) 
+
+    policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME, quantization_config=bnb_policy_config)
+    policy_model = prepare_model_for_kbit_training(policy_model, use_gradient_checkpointing=False)
+    
+    # LoRA 
+    loraconfig = LoraConfig(
+        r=8,
+        lora_alpha=16,
+        target_modules=["q_proj","k_proj","v_proj","o_proj"],
+        bias="none",
+        lora_dropout=0.05,
+        task_type="CAUSAL_LM",
+    )
+    
+    policy_model = get_peft_model(policy_model, loraconfig)
+    # print_trainable_parameters(policy_model)    
     
     training_args = GRPOConfig(
         # data preprocessing
@@ -168,17 +183,18 @@ def main():
         restore_callback_states_from_checkpoint=True,
         dataloader_num_workers=0,
         group_by_length=True,
-        fp16=True, # deepspeed 
-        per_device_train_batch_size=4, # deepspeed
-        per_device_eval_batch_size=4, # deepspeed
-        gradient_accumulation_steps=2, 
+        bf16=True, # deepspeed 
+        per_device_train_batch_size=2, # deepspeed
+        per_device_eval_batch_size=2, # deepspeed
+        gradient_accumulation_steps=1, 
+        gradient_checkpointing=False, 
         learning_rate=1e-7, # deepseed
         weight_decay=0.1, # deepseed
         adam_beta1=0.9, # deepseed
         adam_beta2=0.95, # deepseed
         adam_epsilon=1e-8, # deepseed
         max_grad_norm=1, # deepseed
-        max_steps=6,
+        max_steps=4,
         lr_scheduler_type="cosine",
         warmup_ratio=0.25,
         beta=1, # kl divergence
@@ -190,7 +206,7 @@ def main():
         mask_truncated_completions=True, 
         cache_implementation='dynamic',
         deepspeed="deepspeed_config.json",
-        # use_vllm=True, 
+        # use_vllm=False, 
         # reference model  
         sync_ref_model=True,
         ref_model_mixup_alpha=0.6,
@@ -199,14 +215,14 @@ def main():
         # evaluate
         eval_strategy="no",
         # generation keywords
-        max_completion_length=20000,
+        max_completion_length=5000,
         generation_batch_size=8, # batch_size*step_accumulation
         # save 
         output_dir="Qwen-OutputDir",
         overwrite_output_dir=True,
         save_strategy="steps",
-        save_steps=2,
-        save_total_limit=2,
+        save_steps=4,
+        save_total_limit=1,
         save_only_model=False,
         # log 
         report_to="wandb",
@@ -219,6 +235,7 @@ def main():
         log_on_each_node=False
     )
     
+
     trainer = GRPOTrainer(
         model=policy_model,
         processing_class=policy_tokenizer,
