@@ -3,6 +3,9 @@ import re
 from functools import partial
 import random
 import wandb
+import argparse
+
+from ../Utils/utils import print_trainable_parameters
 
 import torch
 import torch.distributed as dist
@@ -137,7 +140,7 @@ def grpo_reward_function(prompts, completions, reference_answer, **kwargs) -> to
     return torch.tensor(rewards_list, device=f"cuda:{dist.get_rank()}")
 
 
-def main():
+def main(config):
     setup_distributed()
     current_rank = dist.get_rank()
     if current_rank == REWARD_MODEL_GLOBAL_GPU_ID:
@@ -150,7 +153,6 @@ def main():
     dataset=load_from_disk("../dataset/train_dataset/grpo_mix_dataset")
     policy_tokenizer = AutoTokenizer.from_pretrained(POLICY_MODEL_NAME)
     policy_tokenizer.padding_side = "left"  # batch generation 
-    # policy_model = AutoModelForCausalLM.from_pretrained(POLICY_MODEL_NAME) 
 
     bnb_policy_config = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -165,27 +167,26 @@ def main():
     
     # LoRA 
     loraconfig = LoraConfig(
-        r=8,
-        lora_alpha=16,
+        r=config["lora_config"]["r"],
+        lora_alpha=config["lora_config"]["lora_alpha"],
         target_modules=["q_proj","k_proj","v_proj","o_proj"],
         bias="none",
         lora_dropout=0.05,
         task_type="CAUSAL_LM",
     )
     
+    
     policy_model = get_peft_model(policy_model, loraconfig)
-    # print_trainable_parameters(policy_model)    
+    print_trainable_parameters(policy_model)    
     
     training_args = GRPOConfig(
         # data preprocessing
-        remove_unused_columns=False,
+        remove_unused_columns=config["train_arg"]["dataset"]["remove_unused_columns"],
+        dataloader_num_workers=config["train_arg"]["dataset"]["dataloader_num_workers"],
+        group_by_length=config["train_arg"]["dataset"]["group_by_length"],
         # train
-        restore_callback_states_from_checkpoint=True,
-        dataloader_num_workers=0,
-        group_by_length=True,
         bf16=True, # deepspeed 
         per_device_train_batch_size=2, # deepspeed
-        per_device_eval_batch_size=2, # deepspeed
         gradient_accumulation_steps=1, 
         gradient_checkpointing=False, 
         learning_rate=1e-7, # deepseed
@@ -206,23 +207,25 @@ def main():
         mask_truncated_completions=True, 
         cache_implementation='dynamic',
         deepspeed="deepspeed_config.json",
-        # use_vllm=False, 
+        use_vllm=False, 
         # reference model  
         sync_ref_model=True,
         ref_model_mixup_alpha=0.6,
         disable_dropout=True,
         torch_compile=False, # True without deepseek 
-        # evaluate
-        eval_strategy="no",
         # generation keywords
-        max_completion_length=5000,
+        max_completion_length=4096,
         generation_batch_size=8, # batch_size*step_accumulation
+        # evaluate
+        per_device_eval_batch_size=2, # deepspeed
+        eval_strategy="no",
+        eval_steps=4,
         # save 
         output_dir="Qwen-OutputDir",
         overwrite_output_dir=True,
         save_strategy="steps",
         save_steps=4,
-        save_total_limit=1,
+        save_total_limit=2,
         save_only_model=False,
         # log 
         report_to="wandb",
@@ -249,5 +252,21 @@ def main():
     print(f"[Rank {current_rank}] GRPO training finished.")
     cleanup_distributed()
 
+
 if __name__ == "__main__":
-    main()
+    # Define the argument parser as shown above
+    parser = argparse.ArgumentParser(description="Load configuration from a JSON file.")
+    parser.add_argument("--config_file", help="Path to the JSON configuration file.")
+    args = parser.parse_args()
+
+    # Load the JSON file
+    try:
+        with open(args.config_file, 'r') as file:
+            config = json.load(file)
+            print("Configuration loaded successfully!")
+    except FileNotFoundError:
+        print(f"Error: The file '{args.config_file}' was not found.")
+    except json.JSONDecodeError:
+        print(f"Error: The file '{args.config_file}' is not a valid JSON file.")
+    
+    main(config)
