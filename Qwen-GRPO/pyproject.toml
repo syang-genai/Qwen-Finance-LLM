@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "accelerate>=1.9.0",
+    "bitsandbytes>=0.47.0",
     "datasets>=4.0.0",
     "deepspeed>=0.17.3",
     "huggingface-hub>=0.34.2",

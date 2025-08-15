@@ -2,7 +2,7 @@ import os
 import argparse
 import json
 
-from ../Utils/utils import print_trainable_parameters
+from Utils.utils import print_trainable_parameters
 
 import torch
 from torch.utils.data import DataLoader

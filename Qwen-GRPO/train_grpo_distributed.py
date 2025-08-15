@@ -3,9 +3,10 @@ import re
 from functools import partial
 import random
 import wandb
+import json
 import argparse
 
-from ../Utils/utils import print_trainable_parameters
+from Utils.utils import print_trainable_parameters
 
 import torch
 import torch.distributed as dist
@@ -42,7 +43,6 @@ def setup_distributed():
     print(f"[Rank {rank}/{world_size}] Initialized RPC as worker_{rank}")
     return
     
-
 def cleanup_distributed():
     if dist.is_initialized():
         dist.destroy_process_group()
@@ -185,19 +185,19 @@ def main(config):
         dataloader_num_workers=config["train_arg"]["dataset"]["dataloader_num_workers"],
         group_by_length=config["train_arg"]["dataset"]["group_by_length"],
         # train
-        bf16=config["train"]["bf16"], # deepspeed 
-        per_device_train_batch_size=config["train"]["per_device_train_batch_size"], # deepspeed
-        gradient_accumulation_steps=config["train"]["gradient_accumulation_steps"], 
+        bf16=config["train_arg"]["train"]["bf16"], # deepspeed 
+        per_device_train_batch_size=config["train_arg"]["train"]["per_device_train_batch_size"], # deepspeed
+        gradient_accumulation_steps=config["train_arg"]["train"]["gradient_accumulation_steps"], 
         gradient_checkpointing=False, 
-        learning_rate=config["train"]["learning_rate"], # deepseed
+        learning_rate=config["train_arg"]["train"]["learning_rate"], # deepseed
         weight_decay=0.1, # deepseed
         adam_beta1=0.9, # deepseed
         adam_beta2=0.95, # deepseed
         adam_epsilon=1e-8, # deepseed
         max_grad_norm=1, # deepseed
-        max_steps=config["train"]["max_steps"],
+        max_steps=config["train_arg"]["train"]["max_steps"],
         lr_scheduler_type="cosine",
-        warmup_ratio=config["train"]["warmup_ratio"],
+        warmup_ratio=config["train_arg"]["train"]["warmup_ratio"],
         beta=1, # kl divergence
         num_iterations=4, 
         epsilon=0.2,
@@ -206,31 +206,31 @@ def main(config):
         loss_type="dr_grpo",
         mask_truncated_completions=True, 
         cache_implementation='dynamic',
-        deepspeed=config["train"]["deepspeed"],
+        deepspeed=config["train_arg"]["train"]["deepspeed"],
         use_vllm=False, 
         # reference model  
         sync_ref_model=True,
-        ref_model_mixup_alpha=config["ref_model"]["ref_model_mixup_alpha"],
+        ref_model_mixup_alpha=config["train_arg"]["train"]["ref_model"]["ref_model_mixup_alpha"],
         disable_dropout=True,
         torch_compile=False, # True without deepseek 
         # generation keywords
-        max_completion_length=config["train"]["max_completion_length"],
-        generation_batch_size=config["train"]["generation_batch_size"], # batch_size*step_accumulation
+        max_completion_length=config["train_arg"]["train"]["max_completion_length"],
+        generation_batch_size=config["train_arg"]["train"]["generation_batch_size"], # batch_size*step_accumulation
         # evaluate
-        per_device_eval_batch_size=config["eval"]["per_device_eval_batch_size"], # deepspeed
-        eval_strategy=config["eval"]["eval_strategy"],
-        eval_steps=config["eval"]["eval_steps"],
+        per_device_eval_batch_size=config["train_arg"]["eval"]["per_device_eval_batch_size"], # deepspeed
+        eval_strategy=config["train_arg"]["eval"]["eval_strategy"],
+        eval_steps=config["train_arg"]["eval"]["eval_steps"],
         # save 
-        output_dir=config["save"]["output_dir"],
+        output_dir=config["train_arg"]["save"]["output_dir"],
         overwrite_output_dir=True,
         save_strategy="steps",
-        save_steps=config["save"]["save_steps"],
+        save_steps=config["train_arg"]["save"]["save_steps"],
         save_total_limit=2,
         save_only_model=False,
         # log 
         report_to="wandb",
         logging_strategy="steps",
-        logging_steps=config["log"]["logging_steps"],
+        logging_steps=config["train_arg"]["log"]["logging_steps"],
         log_level="debug",
         log_completions=True, 
         wandb_log_unique_prompts=True, 
@@ -248,7 +248,7 @@ def main(config):
     )
     
     print(f"[Rank {current_rank}] Starting GRPO training...")
-    trainer.train()
+    trainer.train(resume_from_checkpoint=config["train_arg"]["resume_from_checkpoint"])
     print(f"[Rank {current_rank}] GRPO training finished.")
     cleanup_distributed()
 
