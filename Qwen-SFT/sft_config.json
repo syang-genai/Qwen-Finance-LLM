@@ -1,0 +1,48 @@
+{
+  "model": {
+    "name": "Qwen/Qwen3-8B"
+  },
+  
+  "dataset": {
+    "path": "../dataset/train_dataset/filter_sft_mix_dataset/"
+  },
+  
+  "train_arg": {
+        "dataset":{
+            "data_seed": 42,
+            "dataloader_num_workers": 4
+        },
+
+        "train":{
+            "bf16": true,
+            "per_device_train_batch_size": 2,
+            "gradient_accumulation_steps": 64,
+            "learning_rate": 1e-4, 
+            "num_train_epochs":1,
+            "max_steps": 256,
+            "warmup_ratio": 0.25,
+            "deepspeed":"deepspeed_config.json"
+        },
+        
+        "eval":{
+            "per_device_eval_batch_size":8,
+            "eval_strategy": "steps",
+            "eval_steps":16
+        },
+        
+
+        "save":{
+            "output_dir":"Qwen-OutputDir/SFT",
+            "save_strategy":"steps",
+            "save_steps":16
+        },
+
+      
+        "log":{
+            "logging_strategy": "steps",
+            "logging_steps": 16
+        },
+  
+        "resume_from_checkpoint": false
+  }
+}

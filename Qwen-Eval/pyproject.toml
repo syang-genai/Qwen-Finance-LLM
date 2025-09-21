@@ -1,0 +1,14 @@
+[project]
+name = "qwen-eval"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "datasets>=4.0.0",
+    "huggingface-hub>=0.34.4",
+    "jinja2>=3.1.6",
+    "nltk>=3.9.1",
+    "transformers>=4.51.0",
+    "vllm",
+]

@@ -1,0 +1,20 @@
+[project]
+name = "qwen-grpo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate>=1.9.0",
+    "bitsandbytes>=0.47.0",
+    "datasets>=4.0.0",
+    "deepspeed>=0.17.3",
+    "huggingface-hub>=0.34.2",
+    "jinja2>=3.1.6",
+    "peft>=0.17.0",
+    "torch>=2.7.1",
+    "transformers>=4.51.0",
+    "trl[vllm]>=0.20.0",
+    "vllm>=0.10.0",
+    "wandb>=0.21.0",
+]

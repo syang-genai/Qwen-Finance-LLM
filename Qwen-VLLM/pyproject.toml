@@ -1,0 +1,12 @@
+[project]
+name = "qwen-vllm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate>=1.10.1",
+    "huggingface-hub>=0.35.0",
+    "trl>=0.23.0",
+    "vllm>=0.10.2",
+]
