@@ -7,8 +7,6 @@ from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
 from . import prompt
 
-server_path="/root/qwen-finance-llm/Qwen-MCP/mcp-yfinance-server"
-print("server_path",server_path)
 
 # endpoint URL provided by your vLLM deployment
 api_base_url = "http://127.0.0.2:8000/v1"
@@ -21,6 +19,7 @@ MODEL=LiteLlm(
         api_base=api_base_url,
     )
 
+
 root_agent = LlmAgent(
     name="qwen_financial_agent",
     model=MODEL,
@@ -29,11 +28,5 @@ root_agent = LlmAgent(
     ),
     instruction=prompt.FINANCIAL_ASSISTANT_PROMPT,
     output_key="assistant_output",
-    tools=[
-            McpToolset(
-                    connection_params=
-                    StreamableHTTPConnectionParams(
-                            url="https://mcp.alphavantage.co/mcp",
-                            headers={"Authorization": "YOUR_API_KEY"}),
-            )]
+    tools=[MCPToolset(connection_params=StreamableHTTPConnectionParams(url="https://mcp.alphavantage.co/mcp?apikey=OJW4ZI0BM7XH5GPZ"))]
 )
