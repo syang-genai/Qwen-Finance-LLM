@@ -4,8 +4,7 @@ import sys
 from google.adk.agents import LlmAgent
 from google.adk.models.lite_llm import LiteLlm
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
-from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
-from mcp import StdioServerParameters
+from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
 from . import prompt
 
 server_path="/root/qwen-finance-llm/Qwen-MCP/mcp-yfinance-server"
@@ -31,13 +30,10 @@ root_agent = LlmAgent(
     instruction=prompt.FINANCIAL_ASSISTANT_PROMPT,
     output_key="assistant_output",
     tools=[
-            MCPToolset(
-                connection_params=StdioConnectionParams(
-                        server_params = StdioServerParameters(
-                        command="uv",
-                        args=["run", f"{server_path}/main.py"],
-                        )
-                    )
-                )
-            ]
+            McpToolset(
+                    connection_params=
+                    StreamableHTTPConnectionParams(
+                            url="https://mcp.alphavantage.co/mcp",
+                            headers={"Authorization": "YOUR_API_KEY"}),
+            )]
 )
