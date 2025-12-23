@@ -8,17 +8,15 @@ This project optimized SFT training on limited GPU resources with QLoRA + FlashA
 dataset: dataset cleaning, dataset formatting and dataset mixing
 Qwen-SFT: supervised finetuning
 Qwen-GRPO: grpo reinforcement learning
-Qwen-Agent: Google ADK agent, which relies on yfinance-mcp-server
+Qwen-Agent: Google ADK agent, which relies on Alpha Vantage MCP Server
 Qwen-VLLM: 
     * deploy Qwen-14B model as GRPO reward model.
     * deploy Qwen-8B SFT and GRPO post training model for evaluation. 
     * deploy Qwen-8B post training model for Qwen-Agent.
-
 
 #### Model Evaluation Matrix
 ![Qwen-8B evaluation matrix without SFT and GRPO on financial datasets.](asset/Qwen-8B.png)
 ![Qwen-8B evaluation matrix with SFT and GRPO on financial datasets.](asset/Qwen-8B-GRPO.png)
 
 #### Google ADK Agent Demo
-
 ![Google ADK Demo](asset/google-adk.png)
