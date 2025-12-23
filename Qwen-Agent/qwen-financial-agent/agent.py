@@ -6,7 +6,9 @@ from google.adk.models.lite_llm import LiteLlm
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
 from . import prompt
+from dotenv import load_dotenv
 
+api_key = os.getenv("apikey") 
 
 # endpoint URL provided by your vLLM deployment
 api_base_url = "http://127.0.0.2:8000/v1"
@@ -28,5 +30,5 @@ root_agent = LlmAgent(
     ),
     instruction=prompt.FINANCIAL_ASSISTANT_PROMPT,
     output_key="assistant_output",
-    tools=[MCPToolset(connection_params=StreamableHTTPConnectionParams(url="https://mcp.alphavantage.co/mcp?apikey=OJW4ZI0BM7XH5GPZ"))]
+    tools=[MCPToolset(connection_params=StreamableHTTPConnectionParams(url=f"https://mcp.alphavantage.co/mcp?apikey={api_key}"))]
 )
