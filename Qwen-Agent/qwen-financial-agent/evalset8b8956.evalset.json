@@ -248,6 +248,86 @@
         "state": {}
       },
       "creation_timestamp": 1766535683.1074228
+    },
+    {
+      "eval_id": "case187fed",
+      "conversation": [
+        {
+          "invocation_id": "e-6a92ca99-baa0-44ab-b9c5-bee657a238b1",
+          "user_content": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "what is the stock price of meta today?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "\n\nThe latest stock price of Meta (META) is **$664.94**. This information is available from the provided data."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "chatcmpl-tool-a86efc48b10d47779bafcf2887a3bbab",
+                "args": {
+                  "symbol": "META"
+                },
+                "name": "GLOBAL_QUOTE"
+              }
+            ],
+            "tool_responses": [],
+            "intermediate_responses": [
+              [
+                "qwen_financial_agent",
+                [
+                  {
+                    "video_metadata": null,
+                    "thought": null,
+                    "inline_data": null,
+                    "file_data": null,
+                    "thought_signature": null,
+                    "function_call": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "function_response": null,
+                    "text": "\n\n"
+                  }
+                ]
+              ]
+            ]
+          },
+          "creation_timestamp": 1766537722.120592
+        }
+      ],
+      "session_input": {
+        "app_name": "qwen-financial-agent",
+        "user_id": "user",
+        "state": {}
+      },
+      "creation_timestamp": 1766537760.1450167
     }
   ],
   "creation_timestamp": 1766535479.5950828
