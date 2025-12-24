@@ -1,0 +1,254 @@
+{
+  "eval_set_id": "evalset8b8956",
+  "name": "evalset8b8956",
+  "description": null,
+  "eval_cases": [
+    {
+      "eval_id": "case6aa081",
+      "conversation": [
+        {
+          "invocation_id": "e-f8245050-c662-4952-8f08-a80020f7b1d9",
+          "user_content": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "Hello "
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "\n\nHello! How can I assist you today? If you have any questions or need help with something, feel free to ask!"
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          },
+          "creation_timestamp": 1766535269.714266
+        },
+        {
+          "invocation_id": "e-bca5b068-6c9d-4317-a55a-766ec557bdd0",
+          "user_content": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "what is the stock price of google today? provide the max and min price."
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "\n\nThe stock price of Google (GOOG) today is **$315.68**. The maximum price is **$316.30**, and the minimum price is **$310.75**."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "chatcmpl-tool-1a002cdbfc344e7da4f28a002728b9ef",
+                "args": {
+                  "symbol": "GOOG"
+                },
+                "name": "GLOBAL_QUOTE"
+              }
+            ],
+            "tool_responses": [],
+            "intermediate_responses": [
+              [
+                "qwen_financial_agent",
+                [
+                  {
+                    "video_metadata": null,
+                    "thought": null,
+                    "inline_data": null,
+                    "file_data": null,
+                    "thought_signature": null,
+                    "function_call": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "function_response": null,
+                    "text": "\n\n"
+                  }
+                ]
+              ]
+            ]
+          },
+          "creation_timestamp": 1766535445.261602
+        }
+      ],
+      "session_input": {
+        "app_name": "qwen-financial-agent",
+        "user_id": "user",
+        "state": {}
+      },
+      "creation_timestamp": 1766535494.897268
+    },
+    {
+      "eval_id": "case423a4f",
+      "conversation": [
+        {
+          "invocation_id": "e-ca6d8a3e-b176-44e1-96e0-9843e1a0df5a",
+          "user_content": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "what is PE ratio?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "\n\nThe Price-to-Earnings (PE) ratio is a financial metric that compares a company's market price to its earnings per share (EPS). The formula is:  \n**PE = Stock Price / EPS**.  \n\nFor example, if a company's stock price is $100 and its earnings per share (EPS) are $10, the PE ratio would be **10:1**.  \n\nThis ratio helps investors assess a company's profitability and its valuation relative to its earnings."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [],
+            "tool_responses": [],
+            "intermediate_responses": []
+          },
+          "creation_timestamp": 1766535641.403768
+        },
+        {
+          "invocation_id": "e-9a8fe854-4a6e-4dc0-8930-7d04475df390",
+          "user_content": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "what is the PE ratio of google today ?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "inline_data": null,
+                "file_data": null,
+                "thought_signature": null,
+                "function_call": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "function_response": null,
+                "text": "\n\nThe current Price-to-Earnings (PE) ratio for Google (GOOG) is **35:1**. This ratio indicates that the company's stock is valued at 35 times its earnings per share, which is a strong indicator of high valuation. For real-time data, you can check the latest stock price and EPS through the Alpha Vantage API or by referring to the quote endpoint provided."
+              }
+            ],
+            "role": null
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "id": "chatcmpl-tool-b4a2a68f7e8240a9ae22920503369422",
+                "args": {
+                  "query": "Google stock price today"
+                },
+                "name": "SEARCH"
+              }
+            ],
+            "tool_responses": [],
+            "intermediate_responses": [
+              [
+                "qwen_financial_agent",
+                [
+                  {
+                    "video_metadata": null,
+                    "thought": null,
+                    "inline_data": null,
+                    "file_data": null,
+                    "thought_signature": null,
+                    "function_call": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "function_response": null,
+                    "text": "\n\n"
+                  }
+                ]
+              ]
+            ]
+          },
+          "creation_timestamp": 1766535663.635793
+        }
+      ],
+      "session_input": {
+        "app_name": "qwen-financial-agent",
+        "user_id": "user",
+        "state": {}
+      },
+      "creation_timestamp": 1766535683.1074228
+    }
+  ],
+  "creation_timestamp": 1766535479.5950828
+}
