@@ -9,10 +9,10 @@ Qwen-GRPO: grpo reinforcement learning
 Qwen-Agent: Google ADK agent, which relies on Alpha Vantage MCP Server  
 Qwen-VLLM:   
     * deploy Qwen-14B model as GRPO reward model.  
+    * deploy Qwen-0.6B model as evaluation model.  
     * deploy Qwen-8B SFT and GRPO post training model for evaluation.   
     * deploy Qwen-8B post training model for Qwen-Agent.  
 Qwen-Eval: EvalScope(model) & GoogleADK Evaluation(agent)
 
 #### Google ADK Agent Demo
 ![Google ADK Demo](asset/google-adk.png)
-
