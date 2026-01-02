@@ -1,22 +1,18 @@
 # Qwen-Finance-LLM
-
 #### Description
-This project delivered a financial conversational agent powered by Qwen3-8B LLM, delivering real-time financial Q&A, investment analysis, stock lookups, and news analysis.
-This project optimized SFT training on limited GPU resources with QLoRA + FlashAttention, reducing memory usage by 80%+ and doubling throughput; Applied GRPO post-training with a Qwen3-14B reward model deployed via vLLM, aligning outputs with LLM model preferences. Boosting business evaluation performance by 13%. Built a real-time query system by integrating Google AgentSDK and Alpha Vantage MCP Server, enabling seamless access to live stock data and news.
+Developed an intelligent financial agent leveraging the Qwen3-8B large language model to deliver advanced financial knowledge Q&A, investment analysis, instantaneous stock lookups, and real-time financial news insights. Implemented Supervised Fine-Tuning (SFT) under constrained GPU environments using QLoRA combined with FlashAttention, achieving more than an 80% reduction in memory utilization while doubling token throughput. Further enhanced model alignment through GRPO-based reinforcement learning, utilizing the Qwen3-14B model as a reward model (deployed via vLLM), resulting in a 13% performance uplift on financial domain benchmarks. Designed and deployed real-time agent capabilities by integrating the Alpha Vantage MCP Server with Google AgentADK, enabling seamless access to live market data and financial news feeds.
 
 #### Contents
-dataset: dataset cleaning, dataset formatting and dataset mixing
-Qwen-SFT: supervised finetuning
-Qwen-GRPO: grpo reinforcement learning
-Qwen-Agent: Google ADK agent, which relies on Alpha Vantage MCP Server
-Qwen-VLLM: 
-    * deploy Qwen-14B model as GRPO reward model.
-    * deploy Qwen-8B SFT and GRPO post training model for evaluation. 
-    * deploy Qwen-8B post training model for Qwen-Agent.
-
-#### Model Evaluation Matrix
-![Qwen-8B evaluation matrix without SFT and GRPO on financial datasets.](asset/Qwen-8B.png)
-![Qwen-8B evaluation matrix with SFT and GRPO on financial datasets.](asset/Qwen-8B-GRPO.png)
+Dataset: dataset cleaning, dataset formatting and dataset mixing  
+Qwen-SFT: supervised finetuning  
+Qwen-GRPO: grpo reinforcement learning  
+Qwen-Agent: Google ADK agent, which relies on Alpha Vantage MCP Server  
+Qwen-VLLM:   
+    * deploy Qwen-14B model as GRPO reward model.  
+    * deploy Qwen-8B SFT and GRPO post training model for evaluation.   
+    * deploy Qwen-8B post training model for Qwen-Agent.  
+Qwen-Eval: EvalScope(model) & GoogleADK Evaluation(agent)
 
 #### Google ADK Agent Demo
 ![Google ADK Demo](asset/google-adk.png)
+
